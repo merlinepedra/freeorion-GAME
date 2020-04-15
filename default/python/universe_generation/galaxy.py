@@ -492,25 +492,29 @@ def disc_galaxy_calc_positions(positions, adjacency_grid, size, width):
     Calculate positions for the disc galaxy shape.
     """
     center_x, center_y = width / 2.0, width / 2.0
-
+    print("Center = ({}|{})".format(center_x, center_y))
     for i in range(size):
         attempts = 100
         while attempts > 0:
             radius = uniform(0.0, width / 2.0)
             angle = uniform(0.0, 2.0 * pi)
+
             x = center_x + radius * cos(angle)
             y = center_y + radius * sin(angle)
-
+            print("Radius = {}; Angle = {}; x = {}; y = {};".format(radius, angle, x, y))
             if (x < 0) or (width <= x) or (y < 0) or (width <= y):
+                print("Out of bounds")
                 attempts -= 1
                 continue
 
             # see if new star is too close to any existing star; if so, we try again
             if adjacency_grid.too_close_to_other_positions((x, y)):
+                print("Too close")
                 attempts -= 1
                 continue
 
             # add the new star location
+            print("Adding position")
             pos = (x, y)
             adjacency_grid.insert_pos(pos)
             positions.append(pos)
@@ -519,6 +523,7 @@ def disc_galaxy_calc_positions(positions, adjacency_grid, size, width):
         if not attempts:
             print("Disc galaxy shape: giving up on placing star {}, can't find"
                   " position sufficiently far from other systems".format(i))
+    print("Final positions: %s" % positions)
 
 
 def cluster_galaxy_calc_positions(positions, adjacency_grid, size, width):
