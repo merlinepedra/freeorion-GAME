@@ -32,6 +32,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Godot", "Godot\Godot.vcxproj", "{30077CD9-6FB0-4C15-B1DA-13940DA6BEF8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GodotClient", "GodotClient\GodotClient.vcxproj", "{511D7120-8DAF-4C8D-BF8F-31000F60E2C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -96,6 +98,14 @@ Global
 		{30077CD9-6FB0-4C15-B1DA-13940DA6BEF8}.Release|Win32.Build.0 = Release|Win32
 		{30077CD9-6FB0-4C15-B1DA-13940DA6BEF8}.Release|x64.ActiveCfg = Release|x64
 		{30077CD9-6FB0-4C15-B1DA-13940DA6BEF8}.Release|x64.Build.0 = Release|x64
+		{511D7120-8DAF-4C8D-BF8F-31000F60E2C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{511D7120-8DAF-4C8D-BF8F-31000F60E2C2}.Debug|Win32.Build.0 = Debug|Win32
+		{511D7120-8DAF-4C8D-BF8F-31000F60E2C2}.Debug|x64.ActiveCfg = Debug|x64
+		{511D7120-8DAF-4C8D-BF8F-31000F60E2C2}.Debug|x64.Build.0 = Debug|x64
+		{511D7120-8DAF-4C8D-BF8F-31000F60E2C2}.Release|Win32.ActiveCfg = Release|Win32
+		{511D7120-8DAF-4C8D-BF8F-31000F60E2C2}.Release|Win32.Build.0 = Release|Win32
+		{511D7120-8DAF-4C8D-BF8F-31000F60E2C2}.Release|x64.ActiveCfg = Release|x64
+		{511D7120-8DAF-4C8D-BF8F-31000F60E2C2}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
