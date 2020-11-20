@@ -1,0 +1,1480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{30077CD9-6FB0-4C15-B1DA-13940DA6BEF8}</ProjectGuid>
+    <RootNamespace>Godot</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>../../</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>false</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../godot/godot-cpp/include/;../../godot/godot-cpp/include/core/;../../godot/godot-cpp/include/gen/;../../godot/godot-cpp/godot_headers/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4244;4305;4101</DisableSpecificWarnings>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAsManaged>false</CompileAsManaged>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>../../Godot.dll</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../godot/godot-cpp/include/;../../godot/godot-cpp/include/core/;../../godot/godot-cpp/include/gen/;../../godot/godot-cpp/godot_headers/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAsManaged>false</CompileAsManaged>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SupportJustMyCode>false</SupportJustMyCode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../godot/godot-cpp/include/;../../godot/godot-cpp/include/core/;../../godot/godot-cpp/include/gen/;../../godot/godot-cpp/godot_headers/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAsManaged>false</CompileAsManaged>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SupportJustMyCode>false</SupportJustMyCode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>false</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>../../godot/godot-cpp/include/;../../godot/godot-cpp/include/core/;../../godot/godot-cpp/include/gen/;../../godot/godot-cpp/godot_headers/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <CompileAsManaged>false</CompileAsManaged>
+      <CompileAsWinRT>false</CompileAsWinRT>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\AABB.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Array.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Basis.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Color.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Dictionary.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\GodotGlobal.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\NodePath.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Plane.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\PoolArrays.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Quat.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Rect2.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\RID.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\String.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\TagDB.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Transform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Transform2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Variant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Vector2.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\core\Vector3.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AcceptDialog.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimatedSprite.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimatedSprite3D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimatedTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Animation.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNode.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeAdd2.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeAdd3.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeAnimation.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeBlend2.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeBlend3.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeBlendSpace1D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeBlendSpace2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeBlendTree.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeOneShot.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeOutput.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeStateMachine.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeStateMachinePlayback.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeStateMachineTransition.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeTimeScale.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeTimeSeek.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationNodeTransition.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationPlayer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationRootNode.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationTrackEditPlugin.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationTree.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AnimationTreePlayer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Area.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Area2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ArrayMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ARVRAnchor.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ARVRCamera.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ARVRController.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ARVRInterface.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ARVRInterfaceGDNative.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ARVROrigin.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ARVRPositionalTracker.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ARVRServer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AStar.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AStar2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AtlasTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioBusLayout.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffect.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectAmplify.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectBandLimitFilter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectBandPassFilter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectChorus.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectCompressor.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectDelay.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectDistortion.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectEQ.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectEQ10.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectEQ21.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectEQ6.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectFilter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectHighPassFilter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectHighShelfFilter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectInstance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectLimiter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectLowPassFilter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectLowShelfFilter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectNotchFilter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectPanner.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectPhaser.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectPitchShift.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectRecord.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectReverb.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectSpectrumAnalyzer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectSpectrumAnalyzerInstance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioEffectStereoEnhance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioServer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStream.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamGenerator.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamGeneratorPlayback.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamMicrophone.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamOGGVorbis.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamPlayback.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamPlaybackResampled.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamPlayer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamPlayer2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamPlayer3D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamRandomPitch.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\AudioStreamSample.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BackBufferCopy.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BakedLightmap.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BakedLightmapData.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BaseButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BitMap.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BitmapFont.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Bone2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BoneAttachment.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BoxContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BoxShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BulletPhysicsDirectBodyState.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\BulletPhysicsServer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Button.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ButtonGroup.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Camera.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Camera2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CameraFeed.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CameraServer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CameraTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CanvasItem.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CanvasItemMaterial.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CanvasLayer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CanvasModulate.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CapsuleMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CapsuleShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CapsuleShape2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CenterContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CharFXTransform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CheckBox.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CheckButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CircleShape2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ClassDB.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ClippedCamera.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CollisionObject.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CollisionObject2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CollisionPolygon.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CollisionPolygon2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CollisionShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CollisionShape2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ColorPicker.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ColorPickerButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ColorRect.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ConcavePolygonShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ConcavePolygonShape2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ConeTwistJoint.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ConfigFile.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ConfirmationDialog.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Container.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Control.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ConvexPolygonShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ConvexPolygonShape2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CPUParticles.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CPUParticles2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Crypto.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CryptoKey.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CSGBox.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CSGCombiner.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CSGCylinder.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CSGMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CSGPolygon.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CSGPrimitive.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CSGShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CSGSphere.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CSGTorus.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CubeMap.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CubeMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Curve.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Curve2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Curve3D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CurveTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CylinderMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\CylinderShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\DampedSpringJoint2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\DirectionalLight.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Directory.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\DynamicFont.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\DynamicFontData.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorExportPlugin.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorFeatureProfile.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorFileDialog.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorFileSystem.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorFileSystemDirectory.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorImportPlugin.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorInspector.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorInspectorPlugin.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorInterface.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorNavigationMeshGenerator.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorPlugin.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorProperty.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorResourceConversionPlugin.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorResourcePreview.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorResourcePreviewGenerator.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorSceneImporter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorSceneImporterAssimp.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorScenePostImport.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorScript.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorSelection.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorSettings.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorSpatialGizmo.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorSpatialGizmoPlugin.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorSpinSlider.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EditorVCSInterface.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\EncodedObjectAsID.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Engine.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Environment.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Expression.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\File.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\FileDialog.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Font.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\FuncRef.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GDNative.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GDNativeLibrary.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GDScript.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GDScriptFunctionState.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Generic6DOFJoint.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Geometry.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GeometryInstance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GIProbe.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GIProbeData.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GlobalConstants.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Gradient.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GradientTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GraphEdit.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GraphNode.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GridContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GridMap.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\GrooveJoint2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\HashingContext.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\HBoxContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\HeightMapShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\HingeJoint.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\HScrollBar.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\HSeparator.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\HSlider.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\HSplitContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\HTTPClient.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\HTTPRequest.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Image.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ImageTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ImmediateGeometry.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Input.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputDefault.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEvent.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventAction.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventGesture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventJoypadButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventJoypadMotion.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventKey.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventMagnifyGesture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventMIDI.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventMouse.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventMouseButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventMouseMotion.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventPanGesture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventScreenDrag.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventScreenTouch.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputEventWithModifiers.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InputMap.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InstancePlaceholder.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\InterpolatedCamera.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\IP.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\IP_Unix.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ItemList.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\JavaClass.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\JavaClassWrapper.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\JavaScript.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Joint.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Joint2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\JSON.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\JSONParseResult.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\JSONRPC.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\KinematicBody.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\KinematicBody2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\KinematicCollision.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\KinematicCollision2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Label.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\LargeTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Light.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Light2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\LightOccluder2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Line2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\LineEdit.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\LineShape2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\LinkButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Listener.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MainLoop.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MarginContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Marshalls.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Material.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MenuButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Mesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MeshDataTool.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MeshInstance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MeshInstance2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MeshLibrary.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MeshTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MobileVRInterface.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MultiMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MultiMeshInstance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MultiMeshInstance2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MultiplayerAPI.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\MultiplayerPeerGDNative.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Mutex.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\NativeScript.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Navigation.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Navigation2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\NavigationMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\NavigationMeshInstance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\NavigationPolygon.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\NavigationPolygonInstance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\NetworkedMultiplayerENet.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\NetworkedMultiplayerPeer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\NinePatchRect.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Node.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Node2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\NoiseTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Object.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\OccluderPolygon2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\OmniLight.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\OpenSimplexNoise.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\OptionButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\OS.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PackedDataContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PackedDataContainerRef.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PackedScene.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PacketPeer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PacketPeerGDNative.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PacketPeerStream.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PacketPeerUDP.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Panel.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PanelContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PanoramaSky.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ParallaxBackground.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ParallaxLayer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Particles.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Particles2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ParticlesMaterial.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Path.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Path2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PathFollow.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PathFollow2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PCKPacker.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Performance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PHashTranslation.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PhysicalBone.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Physics2DDirectBodyState.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Physics2DDirectBodyStateSW.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Physics2DDirectSpaceState.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Physics2DServer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Physics2DServerSW.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Physics2DShapeQueryParameters.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Physics2DShapeQueryResult.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Physics2DTestMotionResult.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PhysicsBody.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PhysicsBody2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PhysicsDirectBodyState.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PhysicsDirectSpaceState.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PhysicsMaterial.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PhysicsServer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PhysicsShapeQueryParameters.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PhysicsShapeQueryResult.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PinJoint.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PinJoint2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PlaneMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PlaneShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PluginScript.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PointMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Polygon2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PolygonPathFinder.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Popup.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PopupDialog.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PopupMenu.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PopupPanel.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Position2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Position3D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PrimitiveMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\PrismMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ProceduralSky.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ProgressBar.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ProjectSettings.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ProximityGroup.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ProxyTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\QuadMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RandomNumberGenerator.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Range.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RayCast.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RayCast2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RayShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RayShape2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RectangleShape2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Reference.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ReferenceRect.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ReflectionProbe.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RegEx.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RegExMatch.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RemoteTransform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RemoteTransform2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Resource.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ResourceFormatLoader.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ResourceFormatLoaderCrypto.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ResourceFormatSaver.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ResourceFormatSaverCrypto.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ResourceImporter.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ResourceInteractiveLoader.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ResourceLoader.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ResourcePreloader.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ResourceSaver.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RichTextEffect.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RichTextLabel.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RigidBody.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RigidBody2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\RootMotionView.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SceneState.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SceneTree.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SceneTreeTimer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Script.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ScriptCreateDialog.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ScriptEditor.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ScrollBar.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ScrollContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SegmentShape2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Semaphore.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Separator.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Shader.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ShaderMaterial.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Shape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Shape2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ShortCut.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Skeleton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Skeleton2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SkeletonIK.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Skin.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SkinReference.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Sky.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Slider.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SliderJoint.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SoftBody.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Spatial.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SpatialGizmo.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SpatialMaterial.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SpatialVelocityTracker.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SphereMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SphereShape.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SpinBox.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SplitContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SpotLight.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SpringArm.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Sprite.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Sprite3D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SpriteBase3D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SpriteFrames.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StaticBody.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StaticBody2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StreamPeer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StreamPeerBuffer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StreamPeerGDNative.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StreamPeerSSL.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StreamPeerTCP.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StreamTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StyleBox.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StyleBoxEmpty.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StyleBoxFlat.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StyleBoxLine.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\StyleBoxTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\SurfaceTool.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TabContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Tabs.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TCP_Server.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TextEdit.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TextFile.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Texture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Texture3D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TextureArray.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TextureButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TextureLayered.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TextureProgress.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TextureRect.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Theme.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Thread.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TileMap.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TileSet.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Timer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ToolButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TouchScreenButton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Translation.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TranslationServer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Tree.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TreeItem.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\TriangleMesh.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Tween.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\UndoRedo.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\UPNP.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\UPNPDevice.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VBoxContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VehicleBody.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VehicleWheel.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VideoPlayer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VideoStream.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VideoStreamGDNative.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VideoStreamTheora.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VideoStreamWebm.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\Viewport.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ViewportContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\ViewportTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisibilityEnabler.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisibilityEnabler2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisibilityNotifier.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisibilityNotifier2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualInstance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScript.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptBasicTypeConstant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptBuiltinFunc.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptClassConstant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptComment.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptComposeArray.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptCondition.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptConstant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptConstructor.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptCustomNode.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptDeconstruct.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptEditor.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptEmitSignal.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptEngineSingleton.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptExpression.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptFunction.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptFunctionCall.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptFunctionState.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptGlobalConstant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptIndexGet.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptIndexSet.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptInputAction.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptIterator.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptLists.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptLocalVar.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptLocalVarSet.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptMathConstant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptNode.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptOperator.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptPreload.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptPropertyGet.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptPropertySet.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptResourcePath.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptReturn.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptSceneNode.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptSceneTree.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptSelect.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptSelf.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptSequence.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptSubCall.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptSwitch.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptTypeCast.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptVariableGet.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptVariableSet.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptWhile.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptYield.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualScriptYieldSignal.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualServer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShader.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNode.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeBooleanConstant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeBooleanUniform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeColorConstant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeColorFunc.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeColorOp.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeColorUniform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeCompare.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeCubeMap.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeCubeMapUniform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeCustom.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeDeterminant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeDotProduct.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeExpression.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeFaceForward.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeFresnel.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeGlobalExpression.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeGroupBase.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeIf.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeInput.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeIs.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeOuterProduct.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeOutput.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeScalarClamp.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeScalarConstant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeScalarDerivativeFunc.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeScalarFunc.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeScalarInterp.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeScalarOp.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeScalarSmoothStep.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeScalarSwitch.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeScalarUniform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeSwitch.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeTexture.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeTextureUniform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeTextureUniformTriplanar.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeTransformCompose.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeTransformConstant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeTransformDecompose.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeTransformFunc.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeTransformMult.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeTransformUniform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeTransformVecMult.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeUniform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVec3Constant.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVec3Uniform.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorClamp.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorCompose.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorDecompose.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorDerivativeFunc.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorDistance.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorFunc.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorInterp.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorLen.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorOp.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorRefract.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorScalarMix.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorScalarSmoothStep.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorScalarStep.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VisualShaderNodeVectorSmoothStep.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VScrollBar.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VSeparator.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VSlider.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\VSplitContainer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WeakRef.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WebRTCDataChannel.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WebRTCDataChannelGDNative.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WebRTCMultiplayer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WebRTCPeerConnection.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WebRTCPeerConnectionGDNative.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WebSocketClient.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WebSocketMultiplayerPeer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WebSocketPeer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WebSocketServer.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WindowDialog.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\World.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\World2D.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\WorldEnvironment.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\X509Certificate.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\XMLParser.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\YSort.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\__init_method_bindings.cpp" />
+    <ClCompile Include="..\..\godot\godot-cpp\src\gen\__register_types.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\android\godot_android.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\arvr\godot_arvr.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\aabb.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\array.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\basis.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\color.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\dictionary.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\gdnative.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\node_path.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\plane.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\pool_arrays.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\quat.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\rect2.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\rid.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\string.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\string_name.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\transform.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\transform2d.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\variant.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\vector2.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative\vector3.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\gdnative_api_struct.gen.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\nativescript\godot_nativescript.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\net\godot_net.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\net\godot_webrtc.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\pluginscript\godot_pluginscript.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\godot_headers\videodecoder\godot_videodecoder.h" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\AABB.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Array.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Basis.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Color.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\CoreTypes.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Defs.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Dictionary.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Godot.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\GodotGlobal.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\GodotProfiling.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\NodePath.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Plane.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\PoolArrays.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Quat.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Rect2.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Ref.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\RID.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\String.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\TagDB.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Transform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Transform2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Variant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Vector2.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Vector3.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\core\Wrapped.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AcceptDialog.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimatedSprite.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimatedSprite3D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimatedTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Animation.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNode.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeAdd2.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeAdd3.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeAnimation.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeBlend2.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeBlend3.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeBlendSpace1D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeBlendSpace2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeBlendTree.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeOneShot.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeOutput.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeStateMachine.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeStateMachinePlayback.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeStateMachineTransition.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeTimeScale.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeTimeSeek.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationNodeTransition.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationPlayer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationRootNode.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationTrackEditPlugin.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationTree.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AnimationTreePlayer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Area.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Area2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ArrayMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ARVRAnchor.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ARVRCamera.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ARVRController.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ARVRInterface.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ARVRInterfaceGDNative.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ARVROrigin.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ARVRPositionalTracker.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ARVRServer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AStar.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AStar2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AtlasTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioBusLayout.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffect.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectAmplify.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectBandLimitFilter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectBandPassFilter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectChorus.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectCompressor.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectDelay.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectDistortion.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectEQ.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectEQ10.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectEQ21.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectEQ6.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectFilter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectHighPassFilter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectHighShelfFilter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectInstance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectLimiter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectLowPassFilter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectLowShelfFilter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectNotchFilter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectPanner.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectPhaser.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectPitchShift.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectRecord.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectReverb.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectSpectrumAnalyzer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectSpectrumAnalyzerInstance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioEffectStereoEnhance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioServer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStream.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamGenerator.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamGeneratorPlayback.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamMicrophone.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamOGGVorbis.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamPlayback.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamPlaybackResampled.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamPlayer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamPlayer2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamPlayer3D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamRandomPitch.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\AudioStreamSample.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BackBufferCopy.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BakedLightmap.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BakedLightmapData.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BaseButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BitMap.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BitmapFont.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Bone2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BoneAttachment.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BoxContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BoxShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BulletPhysicsDirectBodyState.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\BulletPhysicsServer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Button.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ButtonGroup.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Camera.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Camera2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CameraFeed.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CameraServer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CameraTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CanvasItem.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CanvasItemMaterial.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CanvasLayer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CanvasModulate.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CapsuleMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CapsuleShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CapsuleShape2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CenterContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CharFXTransform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CheckBox.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CheckButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CircleShape2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ClassDB.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ClippedCamera.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CollisionObject.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CollisionObject2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CollisionPolygon.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CollisionPolygon2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CollisionShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CollisionShape2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ColorPicker.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ColorPickerButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ColorRect.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ConcavePolygonShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ConcavePolygonShape2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ConeTwistJoint.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ConfigFile.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ConfirmationDialog.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Container.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Control.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ConvexPolygonShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ConvexPolygonShape2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CPUParticles.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CPUParticles2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Crypto.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CryptoKey.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CSGBox.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CSGCombiner.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CSGCylinder.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CSGMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CSGPolygon.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CSGPrimitive.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CSGShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CSGSphere.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CSGTorus.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CubeMap.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CubeMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Curve.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Curve2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Curve3D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CurveTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CylinderMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\CylinderShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\DampedSpringJoint2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\DirectionalLight.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Directory.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\DynamicFont.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\DynamicFontData.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorExportPlugin.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorFeatureProfile.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorFileDialog.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorFileSystem.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorFileSystemDirectory.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorImportPlugin.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorInspector.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorInspectorPlugin.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorInterface.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorNavigationMeshGenerator.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorPlugin.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorProperty.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorResourceConversionPlugin.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorResourcePreview.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorResourcePreviewGenerator.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorSceneImporter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorSceneImporterAssimp.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorScenePostImport.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorScript.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorSelection.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorSettings.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorSpatialGizmo.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorSpatialGizmoPlugin.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorSpinSlider.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EditorVCSInterface.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\EncodedObjectAsID.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Engine.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Environment.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Expression.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\File.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\FileDialog.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Font.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\FuncRef.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GDNative.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GDNativeLibrary.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GDScript.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GDScriptFunctionState.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Generic6DOFJoint.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Geometry.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GeometryInstance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GIProbe.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GIProbeData.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GlobalConstants.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Gradient.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GradientTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GraphEdit.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GraphNode.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GridContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GridMap.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\GrooveJoint2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\HashingContext.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\HBoxContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\HeightMapShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\HingeJoint.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\HScrollBar.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\HSeparator.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\HSlider.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\HSplitContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\HTTPClient.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\HTTPRequest.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Image.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ImageTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ImmediateGeometry.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Input.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputDefault.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEvent.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventAction.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventGesture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventJoypadButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventJoypadMotion.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventKey.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventMagnifyGesture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventMIDI.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventMouse.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventMouseButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventMouseMotion.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventPanGesture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventScreenDrag.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventScreenTouch.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputEventWithModifiers.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InputMap.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InstancePlaceholder.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\InterpolatedCamera.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\IP.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\IP_Unix.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ItemList.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\JavaClass.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\JavaClassWrapper.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\JavaScript.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Joint.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Joint2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\JSON.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\JSONParseResult.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\JSONRPC.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\KinematicBody.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\KinematicBody2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\KinematicCollision.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\KinematicCollision2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Label.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\LargeTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Light.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Light2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\LightOccluder2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Line2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\LineEdit.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\LineShape2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\LinkButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Listener.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MainLoop.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MarginContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Marshalls.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Material.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MenuButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Mesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MeshDataTool.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MeshInstance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MeshInstance2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MeshLibrary.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MeshTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MobileVRInterface.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MultiMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MultiMeshInstance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MultiMeshInstance2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MultiplayerAPI.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\MultiplayerPeerGDNative.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Mutex.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\NativeScript.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Navigation.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Navigation2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\NavigationMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\NavigationMeshInstance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\NavigationPolygon.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\NavigationPolygonInstance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\NetworkedMultiplayerENet.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\NetworkedMultiplayerPeer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\NinePatchRect.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Node.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Node2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\NoiseTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Object.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\OccluderPolygon2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\OmniLight.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\OpenSimplexNoise.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\OptionButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\OS.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PackedDataContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PackedDataContainerRef.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PackedScene.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PacketPeer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PacketPeerGDNative.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PacketPeerStream.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PacketPeerUDP.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Panel.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PanelContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PanoramaSky.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ParallaxBackground.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ParallaxLayer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Particles.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Particles2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ParticlesMaterial.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Path.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Path2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PathFollow.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PathFollow2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PCKPacker.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Performance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PHashTranslation.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PhysicalBone.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Physics2DDirectBodyState.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Physics2DDirectBodyStateSW.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Physics2DDirectSpaceState.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Physics2DServer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Physics2DServerSW.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Physics2DShapeQueryParameters.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Physics2DShapeQueryResult.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Physics2DTestMotionResult.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PhysicsBody.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PhysicsBody2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PhysicsDirectBodyState.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PhysicsDirectSpaceState.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PhysicsMaterial.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PhysicsServer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PhysicsShapeQueryParameters.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PhysicsShapeQueryResult.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PinJoint.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PinJoint2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PlaneMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PlaneShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PluginScript.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PointMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Polygon2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PolygonPathFinder.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Popup.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PopupDialog.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PopupMenu.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PopupPanel.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Position2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Position3D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PrimitiveMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\PrismMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ProceduralSky.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ProgressBar.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ProjectSettings.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ProximityGroup.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ProxyTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\QuadMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RandomNumberGenerator.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Range.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RayCast.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RayCast2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RayShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RayShape2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RectangleShape2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Reference.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ReferenceRect.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ReflectionProbe.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RegEx.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RegExMatch.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RemoteTransform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RemoteTransform2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Resource.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ResourceFormatLoader.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ResourceFormatLoaderCrypto.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ResourceFormatSaver.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ResourceFormatSaverCrypto.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ResourceImporter.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ResourceInteractiveLoader.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ResourceLoader.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ResourcePreloader.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ResourceSaver.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RichTextEffect.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RichTextLabel.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RigidBody.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RigidBody2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\RootMotionView.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SceneState.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SceneTree.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SceneTreeTimer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Script.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ScriptCreateDialog.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ScriptEditor.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ScrollBar.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ScrollContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SegmentShape2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Semaphore.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Separator.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Shader.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ShaderMaterial.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Shape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Shape2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ShortCut.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Skeleton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Skeleton2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SkeletonIK.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Skin.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SkinReference.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Sky.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Slider.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SliderJoint.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SoftBody.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Spatial.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SpatialGizmo.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SpatialMaterial.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SpatialVelocityTracker.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SphereMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SphereShape.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SpinBox.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SplitContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SpotLight.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SpringArm.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Sprite.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Sprite3D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SpriteBase3D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SpriteFrames.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StaticBody.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StaticBody2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StreamPeer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StreamPeerBuffer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StreamPeerGDNative.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StreamPeerSSL.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StreamPeerTCP.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StreamTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StyleBox.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StyleBoxEmpty.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StyleBoxFlat.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StyleBoxLine.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\StyleBoxTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\SurfaceTool.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TabContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Tabs.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TCP_Server.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TextEdit.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TextFile.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Texture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Texture3D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TextureArray.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TextureButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TextureLayered.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TextureProgress.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TextureRect.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Theme.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Thread.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TileMap.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TileSet.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Timer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ToolButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TouchScreenButton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Translation.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TranslationServer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Tree.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TreeItem.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\TriangleMesh.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Tween.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\UndoRedo.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\UPNP.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\UPNPDevice.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VBoxContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VehicleBody.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VehicleWheel.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VideoPlayer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VideoStream.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VideoStreamGDNative.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VideoStreamTheora.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VideoStreamWebm.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\Viewport.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ViewportContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\ViewportTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisibilityEnabler.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisibilityEnabler2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisibilityNotifier.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisibilityNotifier2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualInstance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScript.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptBasicTypeConstant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptBuiltinFunc.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptClassConstant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptComment.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptComposeArray.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptCondition.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptConstant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptConstructor.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptCustomNode.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptDeconstruct.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptEditor.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptEmitSignal.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptEngineSingleton.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptExpression.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptFunction.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptFunctionCall.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptFunctionState.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptGlobalConstant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptIndexGet.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptIndexSet.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptInputAction.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptIterator.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptLists.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptLocalVar.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptLocalVarSet.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptMathConstant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptNode.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptOperator.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptPreload.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptPropertyGet.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptPropertySet.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptResourcePath.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptReturn.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptSceneNode.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptSceneTree.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptSelect.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptSelf.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptSequence.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptSubCall.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptSwitch.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptTypeCast.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptVariableGet.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptVariableSet.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptWhile.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptYield.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualScriptYieldSignal.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualServer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShader.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNode.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeBooleanConstant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeBooleanUniform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeColorConstant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeColorFunc.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeColorOp.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeColorUniform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeCompare.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeCubeMap.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeCubeMapUniform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeCustom.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeDeterminant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeDotProduct.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeExpression.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeFaceForward.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeFresnel.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeGlobalExpression.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeGroupBase.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeIf.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeInput.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeIs.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeOuterProduct.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeOutput.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeScalarClamp.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeScalarConstant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeScalarDerivativeFunc.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeScalarFunc.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeScalarInterp.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeScalarOp.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeScalarSmoothStep.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeScalarSwitch.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeScalarUniform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeSwitch.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeTexture.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeTextureUniform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeTextureUniformTriplanar.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeTransformCompose.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeTransformConstant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeTransformDecompose.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeTransformFunc.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeTransformMult.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeTransformUniform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeTransformVecMult.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeUniform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVec3Constant.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVec3Uniform.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorClamp.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorCompose.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorDecompose.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorDerivativeFunc.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorDistance.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorFunc.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorInterp.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorLen.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorOp.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorRefract.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorScalarMix.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorScalarSmoothStep.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorScalarStep.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VisualShaderNodeVectorSmoothStep.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VScrollBar.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VSeparator.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VSlider.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\VSplitContainer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WeakRef.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WebRTCDataChannel.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WebRTCDataChannelGDNative.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WebRTCMultiplayer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WebRTCPeerConnection.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WebRTCPeerConnectionGDNative.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WebSocketClient.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WebSocketMultiplayerPeer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WebSocketPeer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WebSocketServer.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WindowDialog.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\World.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\World2D.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\WorldEnvironment.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\X509Certificate.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\XMLParser.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\YSort.hpp" />
+    <ClInclude Include="..\..\godot\godot-cpp\include\gen\__icalls.hpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
