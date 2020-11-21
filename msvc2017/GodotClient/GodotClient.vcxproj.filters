@@ -22,6 +22,12 @@
     <Filter Include="Header Files\network">
       <UniqueIdentifier>{913f4b43-ddae-4872-92e5-5747b0d407fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\client">
+      <UniqueIdentifier>{53a1b5f6-3e50-464e-8d0d-7ed5270e529a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\util">
+      <UniqueIdentifier>{11c77033-051a-4ae3-8587-57eea6a3c760}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\util\Logger.h">
@@ -54,25 +60,49 @@
     <ClInclude Include="..\..\util\OptionsDB.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\client\ClientApp.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\client\ClientFSMEvents.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\client\ClientNetworking.h">
+      <Filter>Header Files\client</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\godot\gdlibrary.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\..\godot\gdfreeorion.cpp">
+      <Filter>Source Files\client</Filter>
     </ClCompile>
     <ClCompile Include="..\..\godot\GodotClientApp.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\client</Filter>
     </ClCompile>
     <ClCompile Include="..\..\godot\GodotNetworking.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\client</Filter>
     </ClCompile>
     <ClCompile Include="..\..\godot\GodotSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\godot\gdfreeorion.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\client</Filter>
     </ClCompile>
     <ClCompile Include="..\..\godot\OptionsDB.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\client\ClientNetworking.cpp">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\client\ClientApp.cpp">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\client\ClientFSMEvents.cpp">
+      <Filter>Source Files\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\util\DependencyVersions.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\util\Process.cpp">
+      <Filter>Source Files\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\godot\gdlibrary.cpp">
+      <Filter>Source Files\client</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
