@@ -427,19 +427,25 @@ namespace FreeOrionPython {
                                                     py::return_value_policy<py::return_by_value>())
         ;
 
-        def("getTech",                              &GetTech,                               py::return_value_policy<py::reference_existing_object>(), "Returns the tech (Tech) with the indicated name (string).");
-        def("getTechCategories",                    &TechManager::CategoryNames,            py::return_value_policy<py::return_by_value>(), "Returns the names of all tech categories (StringVec).");
+        def("getTech",
+            +[](const std::string& name) { return GetTech(name); },
+            py::return_value_policy<py::reference_existing_object>(),
+            "Returns the tech (Tech) with the indicated name (string).");
+
+        def("getTechCategories",
+            +[]() -> std::vector<std::string> { return ViewVecToStringVec(GetTechManager().CategoryNames()); },
+            py::return_value_policy<py::return_by_value>(),
+            "Returns the names of all tech categories (StringVec).");
 
         def("techs",
-            +[]() -> std::vector<std::string> { return GetTechManager().TechNames(); },
+            +[]() -> std::vector<std::string> { return ViewVecToStringVec(GetTechManager().TechNames()); },
             py::return_value_policy<py::return_by_value>(),
             "Returns the names of all techs (StringVec).");
 
         def("techsInCategory",
-            +[](const std::string& category) -> std::vector<std::string> { return GetTechManager().TechNames(category); },
+            +[](const std::string& category) -> std::vector<std::string> { return ViewVecToStringVec(GetTechManager().TechNames(category)); },
             py::return_value_policy<py::return_by_value>(),
-            "Returns the names of all techs (StringVec) in the indicated"
-            " tech category name (string).");
+            "Returns the names of all techs (StringVec) in the indicated tech category name (string).");
 
         py::class_<UnlockableItem>("UnlockableItem", py::init<UnlockableItemType, const std::string&>())
             .add_property("type",               &UnlockableItem::type)
