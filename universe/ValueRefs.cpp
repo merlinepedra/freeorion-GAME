@@ -447,12 +447,11 @@ std::string ComplexVariableDump(const std::vector<std::string>& property_names,
     return retval;
 }
 
-std::string StatisticDescription(StatisticType stat_type,
-                                 const std::string& value_desc,
-                                 const std::string& condition_desc)
+std::string StatisticDescription(StatisticType stat_type, std::string_view value_desc,
+                                 std::string_view condition_desc)
 {
-    std::string stringtable_key("DESC_VAR_" + boost::to_upper_copy(
-        boost::lexical_cast<std::string>(stat_type)));
+    std::string stringtable_key{"DESC_VAR_"};
+    stringtable_key.append(boost::to_upper_copy(boost::lexical_cast<std::string>(stat_type)));
 
     if (UserStringExists(stringtable_key)) {
         boost::format formatter = FlexibleFormat(UserString(stringtable_key));
