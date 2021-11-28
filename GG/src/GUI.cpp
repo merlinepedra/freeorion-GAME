@@ -75,12 +75,15 @@ WndEvent::EventType ButtonEvent(WndEvent::EventType left_type, unsigned int mous
         (int(WndEvent::EventType::MButtonDown) - int(WndEvent::EventType::LButtonDown)) * mouse_button);
 }
 
-typedef utf8::wchar_iterator<std::string::const_iterator> utf8_wchar_iterator;
-typedef boost::xpressive::basic_regex<utf8_wchar_iterator> word_regex;
-typedef boost::xpressive::regex_iterator<utf8_wchar_iterator> word_regex_iterator;
-const wchar_t WIDE_DASH = '-';
-const word_regex DEFAULT_WORD_REGEX =
-    +boost::xpressive::set[boost::xpressive::_w | WIDE_DASH];
+namespace {
+    typedef utf8::wchar_iterator<std::string::const_iterator> utf8_wchar_iterator;
+    typedef boost::xpressive::basic_regex<utf8_wchar_iterator> word_regex;
+    typedef boost::xpressive::regex_iterator<utf8_wchar_iterator> word_regex_iterator;
+
+    constexpr wchar_t WIDE_DASH = '-';
+    const word_regex DEFAULT_WORD_REGEX =
+        +boost::xpressive::set[boost::xpressive::_w | WIDE_DASH];
+}
 
 void WriteWndToPNG(const Wnd* wnd, const std::string& filename)
 {
