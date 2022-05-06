@@ -72,3 +72,8 @@ void RandomShuffle(std::vector<int>& c) {
     std::scoped_lock lock(s_prng_mutex);
     std::shuffle(c.begin(), c.end(), gen);
 }
+
+void RandomShuffle(std::vector<unsigned char>& c) {
+    std::scoped_lock lock(s_prng_mutex);
+    std::shuffle(c.begin(), c.end(), gen);
+}
