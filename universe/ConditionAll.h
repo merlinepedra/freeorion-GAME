@@ -15,6 +15,7 @@ struct FO_COMMON_API All final : public Condition {
     All();
 
     bool operator==(const Condition& rhs) const override;
+    Mask Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask = {}) const override;
     void Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain = SearchDomain::NON_MATCHES) const override;
     std::string Description(bool negated = false) const override;

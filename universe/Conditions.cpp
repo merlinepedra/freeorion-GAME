@@ -129,6 +129,28 @@ namespace {
                        from_set.end());
     }
 
+    template <typename Pred>
+    Condition::Mask EvalImpl(const Condition::ObjectSet& candidates, const Pred& pred)
+    {
+        Condition::Mask retval(candidates.size(), 0);
+        std::transform(candidates.cbegin(), candidates.cend(), retval.begin(), pred);
+        return retval;
+    }
+
+    template <typename Pred>
+    Condition::Mask EvalImpl(const Condition::ObjectSet& candidates, const Condition::Mask& mask,
+                             const Pred& pred)
+    {
+        if (mask.empty()) {
+            return EvalImpl(candidates, pred);
+        } else {
+            Condition::Mask retval(candidates.size(), 0);
+            std::transform(candidates.cbegin(), candidates.cend(), mask.begin(), retval.begin(),
+                           [&pred](const auto& o, auto m) { return m && pred(o); });
+            return retval;
+        }
+    }
+
     [[nodiscard]] std::vector<const Condition::Condition*> FlattenAndNestedConditions(
         const std::vector<const Condition::Condition*>& input_conditions)
     {
@@ -148,7 +170,7 @@ namespace {
     [[nodiscard]] std::map<std::string, bool> ConditionDescriptionAndTest(
         const std::vector<const Condition::Condition*>& conditions,
         const ScriptingContext& parent_context,
-        std::shared_ptr<const UniverseObject> candidate_object/* = nullptr*/)
+        std::shared_ptr<const UniverseObject> candidate_object)
     {
         std::map<std::string, bool> retval;
 
@@ -239,20 +261,15 @@ std::string ConditionDescription(const std::vector<const Condition*>& conditions
 ///////////////////////////////////////////////////////////
 // Condition                                             //
 ///////////////////////////////////////////////////////////
-struct Condition::MatchHelper {
-    MatchHelper(const Condition* this_, const ScriptingContext& parent_context) :
-        m_this(this_),
-        m_parent_context(parent_context)
-    {}
-
-    bool operator()(const std::shared_ptr<const UniverseObject>& candidate) const {
-        ScriptingContext context{m_parent_context, candidate};
-        return m_this->Match(context);
-    }
-
-    const Condition* m_this = nullptr;
-    const ScriptingContext& m_parent_context;
-};
+//struct Condition::MatchHelper {
+//    bool operator()(const std::shared_ptr<const UniverseObject>& candidate) const {
+//        ScriptingContext context{m_parent_context, candidate};
+//        return m_this->Match(context);
+//    }
+//
+//    const Condition* m_this = nullptr;
+//    const ScriptingContext& m_parent_context;
+//};
 
 bool Condition::operator==(const Condition& rhs) const {
     if (this == &rhs)
@@ -264,14 +281,52 @@ bool Condition::operator==(const Condition& rhs) const {
     return true;
 }
 
+Mask Condition::Eval(const ScriptingContext& parent_context,
+                     const ObjectSet& candidates,
+                     const Mask& mask) const
+{
+    return EvalImpl(candidates, mask, [cond{this}, &parent_context](const auto& candidate) -> bool {
+        const ScriptingContext candidate_context{parent_context, candidate};
+        return cond->Match(candidate_context);
+    });
+
+    //Mask retval(candidates.size(), 0);
+    //if (mask.empty()) {
+    //    std::transform(candidates.cbegin(), candidates.cend(), retval.begin(),
+    //                   [cond{this}, &parent_context](const auto& candidate) -> bool
+    //    {
+    //        
+    //    });
+
+    //} else {
+    //    std::transform(candidates.cbegin(), candidates.cend(), mask.cbegin(), retval.begin(),
+    //                   [cond{this}, &parent_context](const auto& candidate, const auto& m)
+    //    {
+    //        return m && [&]() -> char {
+    //            const ScriptingContext candidate_context{parent_context, candidate};
+    //            return cond->Match(candidate_context);
+    //        }();
+    //    });
+    //}
+
+    //return retval;
+}
+
 void Condition::Eval(const ScriptingContext& parent_context,
                      ObjectSet& matches, ObjectSet& non_matches,
-                     SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
-{ EvalImpl(matches, non_matches, search_domain, MatchHelper(this, parent_context)); }
+                     SearchDomain search_domain) const
+{
+    EvalImpl(matches, non_matches, search_domain,
+             [cond{this}, &parent_context](const auto& candidate) -> bool
+    {
+        const ScriptingContext candidate_context{parent_context, candidate};
+        return cond->Match(candidate_context);
+    });
+}
 
 void Condition::Eval(const ScriptingContext& parent_context,
                      Effect::TargetSet& matches, Effect::TargetSet& non_matches,
-                     SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
+                     SearchDomain search_domain) const
 {
     if (!GetOptionsDB().Get<bool>("effects.move.test")) {
         // reinterpret sets of mutable objects as sets of non-mutable objects.
@@ -358,7 +413,7 @@ std::string Condition::Description(bool negated/* = false*/) const
 std::string Condition::Dump(unsigned short ntabs) const
 { return ""; }
 
-bool Condition::Match(const ScriptingContext& local_context) const
+bool Condition::Match(const ScriptingContext&) const
 { return false; }
 
 ///////////////////////////////////////////////////////////
@@ -430,7 +485,7 @@ std::string Number::Dump(unsigned short ntabs) const {
 
 void Number::Eval(const ScriptingContext& parent_context,
                   ObjectSet& matches, ObjectSet& non_matches,
-                  SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
+                  SearchDomain search_domain) const
 {
     // Number does not have a single valid local candidate to be matched, as it
     // will match anything if the proper number of objects match the subcondition.
@@ -550,9 +605,22 @@ bool Turn::operator==(const Condition& rhs) const {
     return true;
 }
 
+Mask Turn::Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask) const {
+    bool simple_eval_safe = ((!m_low || m_low->LocalCandidateInvariant()) &&
+                             (!m_high || m_high->LocalCandidateInvariant()) &&
+                             (parent_context.condition_root_candidate || RootCandidateInvariant()));
+    if (simple_eval_safe) {
+        // check turn once and use result for all candidates
+        return Mask(candidates.size(), Match(parent_context));
+    } else {
+        // re-evaluate allowed turn range for each candidate object
+        return Condition::Eval(parent_context, candidates, mask);
+    }
+}
+
 void Turn::Eval(const ScriptingContext& parent_context,
                 ObjectSet& matches, ObjectSet& non_matches,
-                SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
+                SearchDomain search_domain) const
 {
     // if ValueRef for low or high range limits depend on local candidate, then
     // they must be evaluated per-candidate.
@@ -587,7 +655,7 @@ void Turn::Eval(const ScriptingContext& parent_context,
     }
 }
 
-std::string Turn::Description(bool negated/* = false*/) const {
+std::string Turn::Description(bool negated) const {
     std::string low_str;
     if (m_low)
         low_str = (m_low->ConstantExpr() ?
@@ -719,22 +787,110 @@ bool SortedNumberOf::operator==(const Condition& rhs) const {
 }
 
 namespace {
+    Mask NRandomOnes(size_t container_size, size_t how_many_ones) {
+        Mask retval(container_size, 0);                     // initialize false
+        std::fill_n(retval.begin(), how_many_ones, true);   // add ones
+        RandomShuffle(retval);                              // mix up
+        return retval;
+    }
+
+    Mask MaskPickSortedObjects(size_t number, ValueRef::ValueRef<double>* sort_key,
+                               const ScriptingContext& context, SortingMethod sorting_method,
+                               const ObjectSet& candidates)
+    {
+        number = std::max(0u, std::min<size_t>(number, candidates.size()));
+
+        if (sorting_method == SortingMethod::SORT_RANDOM)
+            return NRandomOnes(candidates.size(), number);
+
+        Mask retval(candidates.size(), 0);
+        if (number < 1)
+            return retval;
+
+        if (!sort_key) {
+            ErrorLogger(conditions) << "MaskPickSortedObjects given null sort_key";
+            std::fill_n(retval.begin(), number, 1);
+            return retval;
+        }
+
+        // get sort key values for all objects in from_set, and sort by inserting into map
+        std::vector<std::pair<float, size_t>> sort_keys;
+        sort_keys.reserve(candidates.size());
+        size_t idx = 0;
+        for (const auto& candidate : candidates) {
+            ScriptingContext source_context{context, candidate};
+            float sort_value = sort_key->Eval(source_context);
+            sort_keys.emplace_back(sort_value, idx++);
+        }
+
+        size_t number_transferred(0);
+
+        if (sorting_method == SortingMethod::SORT_MIN) {
+            std::sort(sort_keys.begin(), sort_keys.end(), std::less<>());
+            for (auto [ignored_float, idx] : sort_keys) {
+                retval[idx] = 1;
+                if (++number_transferred >= number)
+                    return retval;
+            }
+
+        } else if (sorting_method == SortingMethod::SORT_MAX) {
+            std::sort(sort_keys.begin(), sort_keys.end(), std::greater<>());
+            for (auto [ignored_float, idx] : sort_keys) {
+                retval[idx] = 1;
+                if (++number_transferred >= number)
+                    return retval;
+            }
+
+        } else if (sorting_method == SortingMethod::SORT_MODE) {
+            // compile histogram of of number of times each sort key occurs
+            std::map<float, unsigned int> histogram;
+            for ([[maybe_unused]] auto& [key, ignored_idx] : sort_keys) {
+                (void)ignored_idx;
+                histogram[key]++;
+            }
+
+            // invert histogram to index by number of occurances
+            std::vector<std::pair<unsigned int, float>> inv_histogram;
+            inv_histogram.reserve(histogram.size());
+            for (const auto& [key, count] : histogram)
+                inv_histogram.emplace_back(count, key);
+            std::sort(inv_histogram.begin(), inv_histogram.end(), std::greater<>());
+
+            // reverse-loop through inverted histogram to find which sort keys
+            // occurred most frequently, and transfer objects with those sort
+            // keys from from_set to to_set.
+            for (const auto& [histo_count, histo_key] : inv_histogram) {
+                const auto hk{histo_key};
+                auto start_it = std::find_if(sort_keys.cbegin(), sort_keys.cend(),
+                                             [hk](const auto& e) { return e.first == hk; });
+                auto end_it = std::find_if_not(start_it, sort_keys.cend(),
+                                               [hk](const auto& e) { return e.first == hk; });
+
+                for (auto kidx_it = start_it; kidx_it != end_it; ++kidx_it) {
+                    auto idx = kidx_it->second;
+                    retval[idx] = 1;
+                    if (++number_transferred >= number)
+                        return retval;
+                }
+            }
+
+        } else {
+            ErrorLogger(conditions) << "MaskPickSortedObjects given unknown sort method";
+        }
+
+        return retval;
+    }
+
     /** Transfers the indicated \a number of objects, randomly selected from from_set to to_set */
-    void TransferRandomObjects(unsigned int number, ObjectSet& from_set, ObjectSet& to_set) {
+    void TransferRandomObjects(size_t number, ObjectSet& from_set, ObjectSet& to_set) {
         // ensure number of objects to be moved is within reasonable range
-        number = std::min<unsigned int>(number, from_set.size());
+        number = std::min<size_t>(number, from_set.size());
         if (number == 0)
             return;
 
-        // create list of bool flags to indicate whether each item in from_set
+        // create list of flags to indicate whether each item in from_set
         // with corresponding place in iteration order should be transfered
-        std::vector<bool> transfer_flags(from_set.size(), false);   // initialized to all false
-
-        // set first  number  flags to true
-        std::fill_n(transfer_flags.begin(), number, true);
-
-        // shuffle flags to randomize which flags are set
-        RandomShuffle(transfer_flags);
+        auto transfer_flags{NRandomOnes(from_set.size(), number)};
 
         // transfer objects that have been flagged
         int i = 0;
@@ -754,7 +910,7 @@ namespace {
       * of \a sort_key evaluated on them, with the largest / smallest / most
       * common sort keys chosen, or a random selection chosen, depending on the
       * specified \a sorting_method */
-    void TransferSortedObjects(unsigned int number, ValueRef::ValueRef<double>* sort_key,
+    void TransferSortedObjects(size_t number, ValueRef::ValueRef<double>* sort_key,
                                const ScriptingContext& context, SortingMethod sorting_method,
                                ObjectSet& from_set, ObjectSet& to_set)
     {
@@ -782,7 +938,7 @@ namespace {
         number = std::min<unsigned int>(number, sort_key_objects.size());
         if (number == 0)
             return;
-        unsigned int number_transferred(0);
+        size_t number_transferred(0);
 
         // pick max / min / most common values
         if (sorting_method == SortingMethod::SORT_MIN) {
@@ -866,9 +1022,23 @@ namespace {
     }
 }
 
+Mask SortedNumberOf::Eval(const ScriptingContext& parent_context,
+                          const ObjectSet& candidates, const Mask&) const
+{
+    std::shared_ptr<const UniverseObject> no_object;
+    ScriptingContext local_context{parent_context, no_object};
+
+    const Mask all_candidates(candidates.size(), 1);
+    Mask op_results = m_condition->Eval(local_context, candidates, all_candidates);
+
+    size_t number = std::min(candidates.size(), static_cast<size_t>(std::max(0, m_number->Eval(local_context))));
+
+    return MaskPickSortedObjects(number, m_sort_key.get(), local_context, m_sorting_method, candidates);
+}
+
 void SortedNumberOf::Eval(const ScriptingContext& parent_context,
                           ObjectSet& matches, ObjectSet& non_matches,
-                          SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
+                          SearchDomain search_domain) const
 {
     // Most conditions match objects independently of the other objects being
     // tested, but the number parameter for NumberOf conditions makes things
@@ -992,7 +1162,7 @@ void SortedNumberOf::Eval(const ScriptingContext& parent_context,
     }
 }
 
-std::string SortedNumberOf::Description(bool negated/* = false*/) const {
+std::string SortedNumberOf::Description(bool negated) const {
     std::string number_str = m_number->ConstantExpr() ? m_number->Dump() : m_number->Description();
 
     if (m_sorting_method == SortingMethod::SORT_RANDOM) {
@@ -1109,9 +1279,12 @@ All::All() {
     m_source_invariant = true;
 }
 
+Mask All::Eval(const ScriptingContext&, const ObjectSet& candidates, const Mask&) const
+{ return Mask(candidates.size(), 1); }
+
 void All::Eval(const ScriptingContext& parent_context,
                ObjectSet& matches, ObjectSet& non_matches,
-               SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
+               SearchDomain search_domain) const
 {
     if (search_domain == SearchDomain::NON_MATCHES) {
         // move all objects from non_matches to matches
@@ -1125,7 +1298,7 @@ void All::Eval(const ScriptingContext& parent_context,
 bool All::operator==(const Condition& rhs) const
 { return Condition::operator==(rhs); }
 
-std::string All::Description(bool negated/* = false*/) const {
+std::string All::Description(bool negated) const {
     return (!negated)
         ? UserString("DESC_ALL")
         : UserString("DESC_ALL_NOT");
@@ -1154,6 +1327,9 @@ None::None() {
     m_target_invariant = true;
     m_source_invariant = true;
 }
+
+Mask None::Eval(const ScriptingContext&, const ObjectSet& candidates, const Mask&) const
+{ return Mask(candidates.size(), 0); }
 
 void None::Eval(const ScriptingContext& parent_context,
                 ObjectSet& matches, ObjectSet& non_matches,
@@ -1200,9 +1376,15 @@ NoOp::NoOp() {
     m_source_invariant = true;
 }
 
+Mask NoOp::Eval(const ScriptingContext&, const ObjectSet& candidates, const Mask& mask) const
+{
+    DebugLogger(conditions) << "NoOp::Eval(" << candidates.size() << " input candidates, " << mask.size() << " input mask size)";
+    return mask.empty() ? Mask(candidates.size(), 1) : mask;
+}
+
 void NoOp::Eval(const ScriptingContext& parent_context,
                 ObjectSet& matches, ObjectSet& non_matches,
-                SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
+                SearchDomain search_domain) const
 {
     // does not modify input ObjectSets
     DebugLogger(conditions) << "NoOp::Eval(" << matches.size() << " input matches, " << non_matches.size() << " input non-matches)";
@@ -1211,7 +1393,7 @@ void NoOp::Eval(const ScriptingContext& parent_context,
 bool NoOp::operator==(const Condition& rhs) const
 { return Condition::operator==(rhs); }
 
-std::string NoOp::Description(bool negated/* = false*/) const
+std::string NoOp::Description(bool negated) const
 { return UserString("DESC_NOOP"); }
 
 std::string NoOp::Dump(unsigned short ntabs) const
@@ -1371,9 +1553,25 @@ namespace {
     };
 }
 
+Mask EmpireAffiliation::Eval(const ScriptingContext& parent_context, const ObjectSet& candidates,
+                             const Mask& mask) const
+{
+    bool simple_eval_safe = (!m_empire_id || m_empire_id->ConstantExpr()) ||
+                            ((!m_empire_id || m_empire_id->LocalCandidateInvariant()) &&
+                            (parent_context.condition_root_candidate || RootCandidateInvariant()));
+    if (simple_eval_safe) {
+        // evaluate empire id once, and use to check all candidate objects
+        int empire_id = m_empire_id ? m_empire_id->Eval(parent_context) : ALL_EMPIRES;
+        return EvalImpl(candidates, mask, EmpireAffiliationSimpleMatch(empire_id, m_affiliation, parent_context));
+    } else {
+        // re-evaluate allowed turn range for each candidate object
+        return Condition::Eval(parent_context, candidates, mask);
+    }
+}
+
 void EmpireAffiliation::Eval(const ScriptingContext& parent_context,
                              ObjectSet& matches, ObjectSet& non_matches,
-                             SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
+                             SearchDomain search_domain) const
 {
     bool simple_eval_safe = (!m_empire_id || m_empire_id->ConstantExpr()) ||
                             ((!m_empire_id || m_empire_id->LocalCandidateInvariant()) &&
@@ -1389,7 +1587,7 @@ void EmpireAffiliation::Eval(const ScriptingContext& parent_context,
     }
 }
 
-std::string EmpireAffiliation::Description(bool negated/* = false*/) const {
+std::string EmpireAffiliation::Description(bool negated) const {
     std::string empire_str;
     if (m_empire_id) {
         int empire_id = ALL_EMPIRES;
@@ -2122,6 +2320,22 @@ namespace {
     };
 }
 
+Mask Type::Eval(const ScriptingContext& parent_context,
+                const ObjectSet& candidates,
+                const Mask& mask) const
+{
+    bool simple_eval_safe = m_type->ConstantExpr() ||
+                            (m_type->LocalCandidateInvariant() &&
+                            (parent_context.condition_root_candidate || RootCandidateInvariant()));
+    if (simple_eval_safe) {
+        UniverseObjectType type = m_type->Eval(parent_context);
+        return EvalImpl(candidates, mask, TypeSimpleMatch(type));
+    } else {
+        // re-evaluate allowed turn range for each candidate object
+        return Condition::Eval(parent_context, candidates, mask);
+    }
+}
+
 void Type::Eval(const ScriptingContext& parent_context,
                 ObjectSet& matches, ObjectSet& non_matches,
                 SearchDomain search_domain) const
@@ -2322,6 +2536,55 @@ namespace {
 
         const std::vector<std::string>& m_names;
     };
+}
+
+Mask Building::Eval(const ScriptingContext& parent_context,
+                const ObjectSet& candidates,
+                const Mask& mask) const
+{
+    bool simple_eval_safe = parent_context.condition_root_candidate || RootCandidateInvariant();
+    if (simple_eval_safe) {
+        // check each valueref for invariance to local candidate
+        for (auto& name : m_names) {
+            if (!name->LocalCandidateInvariant()) {
+                simple_eval_safe = false;
+                break;
+            }
+        }
+    }
+    if (simple_eval_safe) {
+        Mask retval(candidates.size(), 0);
+        if (m_names.size() == 1) {
+            auto match_name = m_names.front()->Eval(parent_context);
+            if (mask.empty()) {
+                std::transform(candidates.cbegin(), candidates.cend(), retval.begin(),
+                               BuildingSimpleMatch<std::string>(match_name));
+            } else {
+                std::transform(candidates.cbegin(), candidates.cend(), mask.begin(), retval.begin(),
+                               [pred{BuildingSimpleMatch<std::string>(match_name)}](const auto& o, auto m)
+                { return m && pred(o); });
+            }
+        } else {
+            // evaluate names once, and use to check all candidate objects
+            std::vector<std::string> names;
+            names.reserve(m_names.size());
+            // get all names from valuerefs
+            for (auto& name : m_names)
+                names.push_back(name->Eval(parent_context));
+            if (mask.empty()) {
+                std::transform(candidates.cbegin(), candidates.cend(), retval.begin(),
+                               BuildingSimpleMatch<std::vector<std::string>>(names));
+            } else {
+                std::transform(candidates.cbegin(), candidates.cend(), mask.begin(), retval.begin(),
+                               [pred{BuildingSimpleMatch<std::vector<std::string>>(names)}](const auto& o, auto m)
+                { return m && pred(o); });
+            }
+        }
+        return retval;
+    } else {
+        // re-evaluate allowed turn range for each candidate object
+        return Condition::Eval(parent_context, candidates, mask);
+    }
 }
 
 void Building::Eval(const ScriptingContext& parent_context,
@@ -10372,6 +10635,23 @@ bool And::operator==(const Condition& rhs) const {
     return true;
 }
 
+Mask And::Eval(const ScriptingContext& parent_context,
+               const ObjectSet& candidates,
+               const Mask& mask) const
+{
+    Mask retval{mask.empty() ? Mask(candidates.size(), 1) : mask};
+    for (const auto& op : m_operands) {
+        // check entries that are initially 1 in retval, to see if they should be switched to 0
+        Mask op_result = op->Eval(parent_context, candidates, retval);
+        // if an entry was checked and passed, keep it as 1
+        // if it wasn't checked, then it should remain 0 regardless of the operand result
+        // if it was checked and didn't match, it should be set to 0
+        std::transform(retval.cbegin(), retval.cend(), op_result.cbegin(), retval.begin(),
+                       [](auto r, auto o) { return r && o; });
+    }
+    return retval;
+};
+
 void And::Eval(const ScriptingContext& parent_context, ObjectSet& matches,
                ObjectSet& non_matches, SearchDomain search_domain) const
 {
@@ -10379,7 +10659,7 @@ void And::Eval(const ScriptingContext& parent_context, ObjectSet& matches,
         ErrorLogger(conditions) << "And::Eval given no operands!";
         return;
     }
-    for (auto& operand : m_operands) {
+    for (const auto& operand : m_operands) {
         if (!operand) {
             ErrorLogger(conditions) << "And::Eval given null operand!";
             return;
@@ -10580,6 +10860,40 @@ bool Or::operator==(const Condition& rhs) const {
     return true;
 }
 
+Mask Or::Eval(const ScriptingContext& parent_context,
+              const ObjectSet& candidates,
+              const Mask& mask) const
+{
+    Mask retval(candidates.size(), 0);
+    Mask local_mask{mask.empty() ? Mask(candidates.size(), 1) : mask};
+
+    auto transform = [](auto it1, const auto end1, auto it2, auto it3, auto out, const auto ternary_op) {
+        while (it1 != end1)
+            *out++ = ternary_op(*it1++, *it2++, *it3++);
+    };
+
+    // for candidates with input mask 1, are any of the operands true?
+    // at each iteration, need to check which of the input mask = 0
+    // candidates currently have return value 0, and if the operand
+    // is 1 for these, set them to 1
+    for (const auto& op : m_operands) {
+        // determine what to check with this operand.
+        // don't need to check entries in retval that are already 1 or that are excluded by the input mask
+        std::transform(retval.cbegin(), retval.cend(), mask.cbegin(), local_mask.begin(),
+                       [](auto r, auto m) { return m && !r; });
+
+        // evaluate operand on selected candidates...
+        Mask op_result = op->Eval(parent_context, candidates, local_mask);
+
+        // entires in retval that are 1 stay 1
+        // entries that are 0 and for which the operand was checked and returned 1 are set to 1
+        transform(retval.cbegin(), retval.cend(), op_result.cbegin(), local_mask.cbegin(), retval.begin(),
+                  [](auto r, auto o, auto m)
+        { return r || (o && m); });
+    }
+    return retval;
+};
+
 void Or::Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain) const
 {
@@ -10755,8 +11069,24 @@ bool Not::operator==(const Condition& rhs) const {
     return true;
 }
 
+Mask Not::Eval(const ScriptingContext& parent_context,
+               const ObjectSet& candidates,
+               const Mask& mask) const
+{
+    if (!m_operand)
+        return Mask(candidates.size(), 0);
+
+    auto invert_mask = [](Mask mask) {
+        std::transform(mask.cbegin(), mask.cend(), mask.begin(),
+                       [](char c) -> char { return c == 0; });
+        return mask;
+    };
+
+    return invert_mask(m_operand->Eval(parent_context, candidates, mask));
+}
+
 void Not::Eval(const ScriptingContext& parent_context, ObjectSet& matches, ObjectSet& non_matches,
-               SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
+               SearchDomain search_domain) const
 {
     if (!m_operand) {
         ErrorLogger(conditions) << "Not::Eval found no subcondition to evaluate!";
@@ -10774,7 +11104,7 @@ void Not::Eval(const ScriptingContext& parent_context, ObjectSet& matches, Objec
     }
 }
 
-std::string Not::Description(bool negated/* = false*/) const
+std::string Not::Description(bool negated) const
 { return m_operand->Description(!negated); }
 
 std::string Not::Dump(unsigned short ntabs) const {
@@ -10839,9 +11169,21 @@ bool OrderedAlternativesOf::operator==(const Condition& rhs) const {
     return true;
 }
 
+Mask OrderedAlternativesOf::Eval(const ScriptingContext& parent_context,
+                                 const ObjectSet& candidates,
+                                 const Mask& mask) const
+{
+    if (m_operands.empty())
+        return Mask(candidates.size(), 0);
+
+    // TODO: this...
+
+    return mask;
+}
+
 void OrderedAlternativesOf::Eval(const ScriptingContext& parent_context,
                                  ObjectSet& matches, ObjectSet& non_matches,
-                                 SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
+                                 SearchDomain search_domain) const
 {
     if (m_operands.empty()) {
         ErrorLogger(conditions) << "OrderedAlternativesOf::Eval given no operands!";
@@ -10870,7 +11212,7 @@ void OrderedAlternativesOf::Eval(const ScriptingContext& parent_context,
         // If an operand condition is selected, apply it to the input non_matches set, moving matching candidates to matches.
         // If no operand condition is selected, because no candidate is matched by any operand condition, then do nothing.
         ObjectSet temp_objects;
-        temp_objects.reserve(std::max(matches.size(),non_matches.size()));
+        temp_objects.reserve(std::max(matches.size(), non_matches.size()));
 
         for (auto& operand : m_operands) {
             operand->Eval(parent_context, temp_objects, non_matches, SearchDomain::NON_MATCHES);
@@ -10902,7 +11244,7 @@ void OrderedAlternativesOf::Eval(const ScriptingContext& parent_context,
         // If an operand condition is selected, apply it to the input matches set, moving non-matching candidates to non_matches.
         // If no operand condition is selected, because no candidate is matched by any operand condition, then move all of the input matches into non_matches.
         ObjectSet temp_objects;
-        temp_objects.reserve(std::max(matches.size(),non_matches.size()));
+        temp_objects.reserve(std::max(matches.size(), non_matches.size()));
 
         for (auto& operand : m_operands) {
             // Apply the current operand optimistically. Select it if there are any matching objects in the input sets
@@ -10937,7 +11279,7 @@ void OrderedAlternativesOf::Eval(const ScriptingContext& parent_context,
     }
 }
 
-std::string OrderedAlternativesOf::Description(bool negated/* = false*/) const {
+std::string OrderedAlternativesOf::Description(bool negated) const {
     std::string values_str;
     if (m_operands.size() == 1) {
         values_str += (!negated)
@@ -11032,8 +11374,13 @@ bool Described::operator==(const Condition& rhs) const {
     return true;
 }
 
+Mask Described::Eval(const ScriptingContext& parent_context,
+                     const ObjectSet& candidates,
+                     const Mask& mask) const
+{ return m_condition ? m_condition->Eval(parent_context, candidates, mask) : Mask(candidates.size(), 0); }
+
 void Described::Eval(const ScriptingContext& parent_context, ObjectSet& matches, ObjectSet& non_matches,
-                     SearchDomain search_domain/* = SearchDomain::NON_MATCHES*/) const
+                     SearchDomain search_domain) const
 {
     if (!m_condition) {
         ErrorLogger(conditions) << "Described::Eval found no subcondition to evaluate!";
@@ -11042,7 +11389,7 @@ void Described::Eval(const ScriptingContext& parent_context, ObjectSet& matches,
     return m_condition->Eval(parent_context, matches, non_matches, search_domain);
 }
 
-std::string Described::Description(bool negated/* = false*/) const {
+std::string Described::Description(bool negated) const {
     if (!m_desc_stringtable_key.empty() && UserStringExists(m_desc_stringtable_key))
         return UserString(m_desc_stringtable_key);
     if (m_condition)
