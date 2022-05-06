@@ -1145,14 +1145,68 @@ namespace {
             ]() -> Condition::ObjectSet
             {
                 Condition::ObjectSet retval;
+                auto filtered_copy = [](auto input_it, const auto end_it, auto mask_it, auto out_it) -> void {
+                    while(input_it != end_it) {
+                        if (*mask_it++)
+                            *out_it++ = *input_it;
+                        ++input_it;
+                    }
+                };
+
 
                 if (activation->SourceInvariant()) {
                     // can apply condition to all source objects simultaneously
-                    Condition::ObjectSet rejected;
-                    rejected.reserve(source_objects.size());
-                    retval = source_objects;
                     ScriptingContext source_context{nullptr, context};
-                    activation->Eval(source_context, retval, rejected, Condition::SearchDomain::MATCHES);
+
+                    ScopedTimer double_activation_timer("Activation Evals");
+                    auto initial_elapsed = double_activation_timer.Elapsed();
+
+                    // mask-based matches determination
+                    auto mask = activation->Eval(source_context, source_objects);
+                    Condition::ObjectSet masked_retval;
+                    masked_retval.reserve(mask.size());
+                    filtered_copy(source_objects.begin(), source_objects.end(), mask.begin(),
+                                  std::back_inserter(masked_retval));
+                    auto masked_elapsed = double_activation_timer.Elapsed();
+
+                    // equivalent calculation with transferring Eval
+                    Condition::ObjectSet rejected, matched{source_objects};
+                    rejected.reserve(source_objects.size());
+                    activation->Eval(source_context, matched, rejected, Condition::SearchDomain::MATCHES);
+                    auto old_elapsed = double_activation_timer.Elapsed() - masked_elapsed;
+
+                    // pick a result?
+                    retval = std::move(masked_retval);
+
+                    DebugLogger() << "Masked result: (" << masked_elapsed.count()/1000 << ") "
+                        << [&mask]() {
+                        std::string txt;
+                        txt.reserve(mask.size());
+                        for (auto c : mask)
+                            txt += std::to_string(c);
+                        return txt;
+                    }() << "  Old result: (" << old_elapsed.count()/1000 << ") "
+                        << [&matched]() {
+                        std::string txt;
+                        txt.reserve(matched.size() * 8);
+                        for (auto& o : matched) {
+                            txt += std::to_string(o->ID());
+                            txt += " ";
+                        }
+                        return txt;
+                    }() << " | " << [&rejected]() {
+                        std::string txt;
+                        txt.reserve(rejected.size() * 8);
+                        for (auto& o : rejected) {
+                            txt += std::to_string(o->ID());
+                            txt += " ";
+                        }
+                        return txt;
+                    }() << [masked_elapsed, old_elapsed, activation]() -> std::string {
+                        if (masked_elapsed < old_elapsed)
+                            return "  Masked is faster";
+                        return "  Masked is slower for: " + activation->Dump();
+                    }();
 
                 } else {
                     // need to apply separately to each source object

@@ -261,16 +261,6 @@ std::string ConditionDescription(const std::vector<const Condition*>& conditions
 ///////////////////////////////////////////////////////////
 // Condition                                             //
 ///////////////////////////////////////////////////////////
-//struct Condition::MatchHelper {
-//    bool operator()(const std::shared_ptr<const UniverseObject>& candidate) const {
-//        ScriptingContext context{m_parent_context, candidate};
-//        return m_this->Match(context);
-//    }
-//
-//    const Condition* m_this = nullptr;
-//    const ScriptingContext& m_parent_context;
-//};
-
 bool Condition::operator==(const Condition& rhs) const {
     if (this == &rhs)
         return true;
@@ -289,27 +279,6 @@ Mask Condition::Eval(const ScriptingContext& parent_context,
         const ScriptingContext candidate_context{parent_context, candidate};
         return cond->Match(candidate_context);
     });
-
-    //Mask retval(candidates.size(), 0);
-    //if (mask.empty()) {
-    //    std::transform(candidates.cbegin(), candidates.cend(), retval.begin(),
-    //                   [cond{this}, &parent_context](const auto& candidate) -> bool
-    //    {
-    //        
-    //    });
-
-    //} else {
-    //    std::transform(candidates.cbegin(), candidates.cend(), mask.cbegin(), retval.begin(),
-    //                   [cond{this}, &parent_context](const auto& candidate, const auto& m)
-    //    {
-    //        return m && [&]() -> char {
-    //            const ScriptingContext candidate_context{parent_context, candidate};
-    //            return cond->Match(candidate_context);
-    //        }();
-    //    });
-    //}
-
-    //return retval;
 }
 
 void Condition::Eval(const ScriptingContext& parent_context,
@@ -10639,17 +10608,199 @@ Mask And::Eval(const ScriptingContext& parent_context,
                const ObjectSet& candidates,
                const Mask& mask) const
 {
-    Mask retval{mask.empty() ? Mask(candidates.size(), 1) : mask};
-    for (const auto& op : m_operands) {
-        // check entries that are initially 1 in retval, to see if they should be switched to 0
-        Mask op_result = op->Eval(parent_context, candidates, retval);
-        // if an entry was checked and passed, keep it as 1
-        // if it wasn't checked, then it should remain 0 regardless of the operand result
-        // if it was checked and didn't match, it should be set to 0
-        std::transform(retval.cbegin(), retval.cend(), op_result.cbegin(), retval.begin(),
-                       [](auto r, auto o) { return r && o; });
+    auto this_eval_number = m_evals++;
+
+    if (this_eval_number >= m_eval_times.size()) {
+        Mask retval{mask.empty() ? Mask(candidates.size(), 1) : mask};
+        for (const auto& op : m_operands) {
+            // check entries that are initially 1 in retval, to see if they should be switched to 0
+            Mask op_result = op->Eval(parent_context, candidates, retval);
+            // if an entry was checked and passed, keep it as 1
+            // if it wasn't checked, then it should remain 0 regardless of the operand result
+            // if it was checked and didn't match, it should be set to 0
+            std::transform(retval.cbegin(), retval.cend(), op_result.cbegin(), retval.begin(),
+                           [](auto r, auto o) { return r && o; });
+        }
+        return retval;
+
+    } else {
+        Mask retval0, retval1, retval2, retval3;
+        auto& this_eval_times = m_eval_times[this_eval_number];
+
+        if constexpr (false) {
+            ScopedTimer and_timer("filtering", false);
+            Mask retval{mask.empty() ? Mask(candidates.size(), 1) : mask};
+            for (const auto& op : m_operands) {
+                // check entries that are initially 1 in retval, to see if they should be switched to 0
+                Mask op_result = op->Eval(parent_context, candidates, retval);
+                // if an entry was checked and passed, keep it as 1
+                // if it wasn't checked, then it should remain 0 regardless of the operand result
+                // if it was checked and didn't match, it should be set to 0
+                std::transform(retval.cbegin(), retval.cend(), op_result.cbegin(), retval.begin(),
+                               [](auto r, auto o) { return r && o; });
+            }
+            this_eval_times[0] = and_timer.Elapsed().count();
+            retval0 = std::move(retval);
+        }
+
+        if constexpr (false) {
+            ScopedTimer and_timer("separate", false);
+            std::vector<Mask> op_results;
+            op_results.reserve(m_operands.size());
+
+            for (const auto& op : m_operands) {
+                // check entries that are 1 in mask
+                op_results.push_back(op->Eval(parent_context, candidates, mask));
+            }
+
+            // if an entry was checked and passed all operands, it passes the And
+            Mask retval{mask.empty() ? Mask(candidates.size(), 1) : mask};
+            for (const auto& op_result : op_results) {
+                std::transform(retval.cbegin(), retval.cend(), op_result.begin(), retval.begin(),
+                               [](auto r, auto o) { return r && o; });
+            }
+            this_eval_times[1] = and_timer.Elapsed().count();
+
+            retval1 = std::move(retval);
+        }
+
+        {
+            ScopedTimer and_timer("filtering shortcut", false);
+            Mask retval{mask.empty() ? Mask(candidates.size(), 1) : mask};
+            std::ptrdiff_t nzo = 0; // non-zero offset -> first entry that could contain a nonzero value
+            for (const auto& op : m_operands) {
+                // check entries that are initially 1 in retval, to see if they should be switched to 0
+                Mask op_result = op->Eval(parent_context, candidates, retval);
+                // if an entry was checked and passed, keep it as 1
+                // if it wasn't checked, then it should remain 0 regardless of the operand result
+                // if it was checked and didn't match, it should be set to 0
+                std::transform(retval.cbegin() + nzo, retval.cend(), op_result.cbegin() + nzo,
+                               retval.begin() + nzo, [](auto r, auto o) { return r && o; });
+                // stop if nothing left can match...
+                auto nonzero_it = std::find_if(retval.cbegin() + nzo, retval.cend(),
+                                               [](auto r) { return r != 0; });
+                if (nonzero_it == retval.cend())
+                    break; // everything does not match at least one operand, so can stop
+                nzo = std::distance(retval.cbegin(), nonzero_it);
+            }
+            this_eval_times[2] = and_timer.Elapsed().count();
+
+            //retval2 = std::move(retval);
+            return retval;
+        }
+
+        if constexpr (false) {
+            ScopedTimer and_timer("futures busy wait", false);
+            std::vector<std::future<Mask>> op_results;
+            op_results.reserve(m_operands.size());
+
+            for (const auto& op : m_operands) {
+                // check entries that are 1 in mask
+                const auto& opr{op};
+                op_results.push_back(std::async(std::launch::async, [&op, &parent_context, &candidates, &mask]
+                                                { return op->Eval(parent_context, candidates, mask); }));
+            }
+
+            // if an entry was checked and passed all operands, it passes the And
+            Mask retval(candidates.size(), 1);
+
+            const size_t needed = m_operands.size();
+            size_t gotten = 0;
+
+            while (gotten < needed) {
+                for (auto& op_result : op_results) {
+                    if (!op_result.valid())
+                        continue;
+                    ++gotten;
+                    std::transform(retval.cbegin(), retval.cend(), op_result.get().begin(), retval.begin(),
+                                   [](auto r, auto o) { return r && o; });
+                }
+            }
+            this_eval_times[3] = and_timer.Elapsed().count();
+
+            retval3 = std::move(retval);
+        }
+
+        /*
+        auto to_string = [](const Mask& mask) {
+            std::string txt;
+            txt.reserve(mask.size());
+            for (auto c : mask)
+                txt += std::to_string(c);
+            return txt;
+        };
+
+        auto dotprod = [](const auto& vec1, const auto& vec2) -> size_t {
+            constexpr size_t zero = 0;
+            auto result = (vec2.empty()) ?
+                std::reduce(vec1.cbegin(), vec1.cend(), zero) :
+                std::transform_reduce(vec1.cbegin(), vec1.cend(), vec2.cbegin(), zero);
+            return result;
+        };
+
+        bool discrepancy = false;
+        if (dotprod(retval0, mask) != dotprod(retval1, mask)) {
+            ErrorLogger() << "DISCREPANCY BETWEEN 0 and 1: " << to_string(retval0) << " | " << to_string(retval1) << " mask: " << to_string(mask);
+            discrepancy = true;
+        }
+        if (dotprod(retval0, mask) != dotprod(retval2, mask)) {
+            ErrorLogger() << "DISCREPANCY BETWEEN 0 and 2: " << to_string(retval0) << " | " << to_string(retval2) << " mask: " << to_string(mask);
+            discrepancy = true;
+        }
+        if (dotprod(retval0, mask) != dotprod(retval3, mask)) {
+            ErrorLogger() << "DISCREPANCY BETWEEN 0 and 3: " << to_string(retval0) << " | " << to_string(retval3) << " mask: " << to_string(mask);
+            discrepancy = true;
+        }
+        if (!discrepancy)
+            ErrorLogger() << "NO DISCREPANCY";
+        else
+            ErrorLogger() << "Discrepant condition: " << Dump();
+        */
+
+        if (this_eval_number != 9 && this_eval_number != 25 && this_eval_number != 64)
+            return retval0;
+
+
+        auto SummarizeData = [evals{this->m_evals.load()}](const decltype(m_eval_times)& data, size_t idx) {
+            using val = std::decay_t<decltype(data)>::value_type::value_type;
+            val min = std::numeric_limits<val>::max();
+            val max = std::numeric_limits<val>::min();
+            val sum = 0;
+            for (size_t rep = 0; rep < evals; ++rep) {
+                const auto& entry = data[rep];
+                min = std::min(entry[idx], min);
+                max = std::max(entry[idx], max);
+                sum += entry[idx];
+            }
+            val mean = sum / evals;
+            return std::tuple(min / 100, mean / 100, max / 100);
+        };
+
+        auto ReportData = [](auto data_tuple, size_t idx) {
+            const auto& [min, mean, max] = data_tuple;
+            return std::to_string(idx == 0 ? min : idx == 1 ? mean : idx == 2 ? max : 99999);
+        };
+
+        constexpr size_t result_idx = 1;
+
+        auto summary0 = SummarizeData(m_eval_times, 0);
+        auto summary1 = SummarizeData(m_eval_times, 1);
+        auto summary2 = SummarizeData(m_eval_times, 2);
+        auto summary3 = SummarizeData(m_eval_times, 3);
+        std::map<unsigned long long, size_t> sorted_means{{std::get<result_idx>(summary0), 0},
+                                                         {std::get<result_idx>(summary1), 1},
+                                                         {std::get<result_idx>(summary2), 2},
+                                                         {std::get<result_idx>(summary3), 3}};
+        auto best_mean = sorted_means.begin()->second;
+
+        DebugLogger() << "And after " << m_evals << " evals:"
+                      << (best_mean != 0 ? "  linked:   " : " <LINKED>   ") << ReportData(summary0, result_idx)
+                      << (best_mean != 1 ? "  separate: " : " <SEPARATE> ") << ReportData(summary1, result_idx)
+                      << (best_mean != 2 ? "  shortcut: " : " <SHORTCUT> ") << ReportData(summary2, result_idx)
+                      << (best_mean != 3 ? "  looping:  " : " <LOOPING>  ") << ReportData(summary3, result_idx);
+
+        return retval0;
     }
-    return retval;
 };
 
 void And::Eval(const ScriptingContext& parent_context, ObjectSet& matches,
@@ -10878,9 +11029,15 @@ Mask Or::Eval(const ScriptingContext& parent_context,
     // is 1 for these, set them to 1
     for (const auto& op : m_operands) {
         // determine what to check with this operand.
-        // don't need to check entries in retval that are already 1 or that are excluded by the input mask
-        std::transform(retval.cbegin(), retval.cend(), mask.cbegin(), local_mask.begin(),
-                       [](auto r, auto m) { return m && !r; });
+        if (mask.empty()) {
+            // don't need to check entries in retval that are already 1
+            std::transform(retval.cbegin(), retval.cend(), local_mask.begin(),
+                           [](auto r) { return !r; });
+        } else {
+            // don't need to check entries in retval that are already 1 or that are excluded by the input mask
+            std::transform(retval.cbegin(), retval.cend(), mask.cbegin(), local_mask.begin(),
+                           [](auto r, auto m) { return m && !r; });
+        }
 
         // evaluate operand on selected candidates...
         Mask op_result = op->Eval(parent_context, candidates, local_mask);

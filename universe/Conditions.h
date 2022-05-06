@@ -1570,6 +1570,8 @@ struct FO_COMMON_API And final : public Condition {
 
 private:
     std::vector<std::unique_ptr<Condition>> m_operands;
+    mutable std::atomic<size_t> m_evals = 0;
+    mutable std::array<std::array<unsigned long long, 4>, 256> m_eval_times{};
 };
 
 /** Matches all objects that match at least one Condition in \a operands. */
