@@ -455,6 +455,7 @@ struct FO_COMMON_API HasTag final : public Condition {
     explicit HasTag(std::unique_ptr<ValueRef::ValueRef<std::string>>&& name);
 
     bool operator==(const Condition& rhs) const override;
+    Mask Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask = {}) const override;
     void Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain = SearchDomain::NON_MATCHES) const override;
     [[nodiscard]] std::string Description(bool negated = false) const override;
@@ -498,6 +499,7 @@ private:
 struct FO_COMMON_API Contains final : public Condition {
     Contains(std::unique_ptr<Condition>&& condition);
     bool operator==(const Condition& rhs) const override;
+    Mask Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask = {}) const override;
     void Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain = SearchDomain::NON_MATCHES) const override;
     void GetDefaultInitialCandidateObjects(const ScriptingContext& parent_context,
@@ -521,6 +523,7 @@ private:
 struct FO_COMMON_API ContainedBy final : public Condition {
     ContainedBy(std::unique_ptr<Condition>&& condition);
     bool operator==(const Condition& rhs) const override;
+    Mask Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask = {}) const override;
     void Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain = SearchDomain::NON_MATCHES) const override;
     void GetDefaultInitialCandidateObjects(const ScriptingContext& parent_context,
@@ -670,6 +673,7 @@ struct FO_COMMON_API PlanetEnvironment final : public Condition {
                       std::unique_ptr<ValueRef::ValueRef<std::string>>&& species_name_ref = nullptr);
 
     bool operator==(const Condition& rhs) const override;
+    Mask Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask = {}) const override;
     void Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain = SearchDomain::NON_MATCHES) const override;
     void GetDefaultInitialCandidateObjects(const ScriptingContext& parent_context,
@@ -696,6 +700,7 @@ struct FO_COMMON_API Species final : public Condition {
     Species();
 
     bool operator==(const Condition& rhs) const override;
+    Mask Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask = {}) const override;
     void Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain = SearchDomain::NON_MATCHES) const override;
     void GetDefaultInitialCandidateObjects(const ScriptingContext& parent_context,
@@ -756,6 +761,7 @@ struct FO_COMMON_API FocusType final : public Condition {
     FocusType(std::vector<std::unique_ptr<ValueRef::ValueRef<std::string>>>&& names);
 
     bool operator==(const Condition& rhs) const override;
+    Mask Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask = {}) const override;
     void Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain = SearchDomain::NON_MATCHES) const override;
     [[nodiscard]] std::string Description(bool negated = false) const override;
@@ -779,6 +785,7 @@ struct FO_COMMON_API StarType final : public Condition {
     StarType(std::vector<std::unique_ptr<ValueRef::ValueRef< ::StarType>>>&& types);
 
     bool operator==(const Condition& rhs) const override;
+    Mask Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask = {}) const override;
     void Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain = SearchDomain::NON_MATCHES) const override;
     [[nodiscard]] std::string Description(bool negated = false) const override;
@@ -959,6 +966,7 @@ struct FO_COMMON_API MeterValue final : public Condition {
                std::unique_ptr<ValueRef::ValueRef<double>>&& high);
 
     bool operator==(const Condition& rhs) const override;
+    Mask Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask = {}) const override;
     void Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain = SearchDomain::NON_MATCHES) const override;
     [[nodiscard]] std::string Description(bool negated = false) const override;
@@ -1468,6 +1476,7 @@ struct FO_COMMON_API ValueTest final : public Condition {
     explicit ValueTest(const ValueTest& rhs);
 
     bool operator==(const Condition& rhs) const override;
+    Mask Eval(const ScriptingContext& parent_context, const ObjectSet& candidates, const Mask& mask = {}) const override;
     void Eval(const ScriptingContext& parent_context, ObjectSet& matches,
               ObjectSet& non_matches, SearchDomain search_domain = SearchDomain::NON_MATCHES) const override;
     [[nodiscard]] std::string Description(bool negated = false) const override;
