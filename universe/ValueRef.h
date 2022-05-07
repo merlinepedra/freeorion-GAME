@@ -25,7 +25,7 @@ struct FO_COMMON_API ValueRefBase {
 
     [[nodiscard]] std::string         InvariancePattern() const;
     [[nodiscard]] virtual std::string Description() const = 0;                    //! Returns a user-readable text description of this ValueRef
-    [[nodiscard]] virtual std::string EvalAsString() const = 0;                   //! Returns a textual representation of the evaluation result  with an empty/default context
+    [[nodiscard]] virtual std::string EvalAsString() const = 0;                   //! Returns a textual representation of the evaluation result with an empty/default context
     [[nodiscard]] virtual std::string Dump(unsigned short ntabs = 0) const = 0;   //! Returns a textual representation that should be parseable to recreate this ValueRef
 
     virtual void SetTopLevelContent(const std::string& content_name) {}
