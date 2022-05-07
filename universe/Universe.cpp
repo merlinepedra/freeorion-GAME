@@ -1158,7 +1158,7 @@ namespace {
                     // can apply condition to all source objects simultaneously
                     ScriptingContext source_context{nullptr, context};
 
-                    ScopedTimer double_activation_timer("Activation Evals");
+                    ScopedTimer double_activation_timer("Activation Evals", false);
                     auto initial_elapsed = double_activation_timer.Elapsed();
 
                     // mask-based matches determination
@@ -1178,14 +1178,15 @@ namespace {
                     // pick a result?
                     retval = std::move(masked_retval);
 
-                    DebugLogger() << "Masked result: (" << masked_elapsed.count()/1000 << ") "
+                    DebugLogger() << "Masked | Old : " << masked_elapsed.count()/100 << " | " << old_elapsed.count() / 100
+                        << "  Mask: "
                         << [&mask]() {
                         std::string txt;
                         txt.reserve(mask.size());
                         for (auto c : mask)
                             txt += std::to_string(c);
                         return txt;
-                    }() << "  Old result: (" << old_elapsed.count()/1000 << ") "
+                    }() << "  Old: "
                         << [&matched]() {
                         std::string txt;
                         txt.reserve(matched.size() * 8);
