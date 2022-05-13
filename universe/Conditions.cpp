@@ -770,7 +770,7 @@ namespace {
                                const ScriptingContext& context, SortingMethod sorting_method,
                                const ObjectSet& candidates)
     {
-        number = std::max(0u, std::min<size_t>(number, candidates.size()));
+        number = std::max<size_t>(0u, std::min<size_t>(number, candidates.size()));
 
         if (sorting_method == SortingMethod::SORT_RANDOM)
             return NRandomOnes(candidates.size(), number);
