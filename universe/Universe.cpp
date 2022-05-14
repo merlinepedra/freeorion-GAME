@@ -1162,11 +1162,11 @@ namespace {
                     auto initial_elapsed = double_activation_timer.Elapsed();
 
                     // mask-based matches determination
-                    auto mask = activation->Eval(source_context, source_objects);
+                    //auto mask = activation->Eval(source_context, source_objects);
                     Condition::ObjectSet masked_retval;
-                    masked_retval.reserve(mask.size());
-                    filtered_copy(source_objects.begin(), source_objects.end(), mask.begin(),
-                                  std::back_inserter(masked_retval));
+                    //masked_retval.reserve(mask.size());
+                    //filtered_copy(source_objects.begin(), source_objects.end(), mask.begin(),
+                    //              std::back_inserter(masked_retval));
                     auto masked_elapsed = double_activation_timer.Elapsed();
 
                     // equivalent calculation with transferring Eval
@@ -1178,36 +1178,36 @@ namespace {
                     // pick a result?
                     retval = std::move(masked_retval);
 
-                    DebugLogger() << "Masked | Old : " << masked_elapsed.count()/100 << " | " << old_elapsed.count() / 100
-                        << "  Mask: "
-                        << [&mask]() {
-                        std::string txt;
-                        txt.reserve(mask.size());
-                        for (auto c : mask)
-                            txt += std::to_string(c);
-                        return txt;
-                    }() << "  Old: "
-                        << [&matched]() {
-                        std::string txt;
-                        txt.reserve(matched.size() * 8);
-                        for (auto& o : matched) {
-                            txt += std::to_string(o->ID());
-                            txt += " ";
-                        }
-                        return txt;
-                    }() << " | " << [&rejected]() {
-                        std::string txt;
-                        txt.reserve(rejected.size() * 8);
-                        for (auto& o : rejected) {
-                            txt += std::to_string(o->ID());
-                            txt += " ";
-                        }
-                        return txt;
-                    }() << [masked_elapsed, old_elapsed, activation]() -> std::string {
-                        if (masked_elapsed < old_elapsed)
-                            return "  Masked is faster";
-                        return "  Masked is slower for: " + activation->Dump();
-                    }();
+                    //DebugLogger() << "Masked | Old : " << masked_elapsed.count()/100 << " | " << old_elapsed.count() / 100
+                    //    << "  Mask: "
+                    //    << [&mask]() {
+                    //    std::string txt;
+                    //    txt.reserve(mask.size());
+                    //    for (auto c : mask)
+                    //        txt += std::to_string(c);
+                    //    return txt;
+                    //}() << "  Old: "
+                    //    << [&matched]() {
+                    //    std::string txt;
+                    //    txt.reserve(matched.size() * 8);
+                    //    for (auto& o : matched) {
+                    //        txt += std::to_string(o->ID());
+                    //        txt += " ";
+                    //    }
+                    //    return txt;
+                    //}() << " | " << [&rejected]() {
+                    //    std::string txt;
+                    //    txt.reserve(rejected.size() * 8);
+                    //    for (auto& o : rejected) {
+                    //        txt += std::to_string(o->ID());
+                    //        txt += " ";
+                    //    }
+                    //    return txt;
+                    //}() << [masked_elapsed, old_elapsed, activation]() -> std::string {
+                    //    if (masked_elapsed < old_elapsed)
+                    //        return "  Masked is faster";
+                    //    return "  Masked is slower for: " + activation->Dump();
+                    //}();
 
                 } else {
                     // need to apply separately to each source object
