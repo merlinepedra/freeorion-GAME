@@ -1,6 +1,7 @@
 #ifndef _Enum_h_
 #define _Enum_h_
 
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <string>
