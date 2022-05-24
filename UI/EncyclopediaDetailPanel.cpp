@@ -1,9 +1,14 @@
 #include "EncyclopediaDetailPanel.h"
 
-#include <unordered_map>
 #include <boost/algorithm/clamp.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/locale/conversion.hpp>
+
+#if __has_include(<charconv>)
+#include <charconv>
+#endif
+
+#include <unordered_map>
 #include <GG/GUI.h>
 #include <GG/RichText/RichText.h>
 #include <GG/ScrollPanel.h>
@@ -54,6 +59,10 @@
 #include "../util/ThreadPool.h"
 #include "../util/VarText.h"
 
+#if __has_include(<charconv>)
+#include <charconv>
+#endif
+
 using boost::io::str;
 
 namespace {
@@ -78,6 +87,43 @@ namespace {
     const std::string TAG_EXTINCT = "CTRL_EXTINCT";
     /** @content_tag{PEDIA_} Defines an encyclopedia category for the generated article of the containing content definition.  The category name should be postfixed to this tag. **/
     const std::string TAG_PEDIA_PREFIX = "PEDIA_";
+}
+
+namespace {
+    int ToInt(std::string_view sv, int default_result = -1) {
+        int retval = default_result;
+#if defined(__cpp_lib_to_chars)
+        std::from_chars(sv.data(), sv.data() + sv.size(), retval);
+#else
+        try {
+            retval = boost::lexical_cast<int>(sv);
+        } catch (...) {
+        }
+#endif
+        return retval;
+    }
+
+    constexpr long long Pow(long long base, long long exp) {
+        long long retval = 1;
+        while (exp--)
+            retval *= base;
+        return retval;
+    }
+    static_assert(std::numeric_limits<long long>::max() > std::numeric_limits<int>::max());
+    static_assert(std::numeric_limits<int>::max() > 0);
+
+    auto ToChars(int num) {
+#if defined(__cpp_lib_to_chars)
+        constexpr std::size_t digits = 12;
+        constexpr long long too_big = Pow(10ll, digits - 1ll);
+        static_assert(std::numeric_limits<int>::max() < too_big); // enough space for chars representation of int...
+        std::string retval(12, 0); // should fit in small string optimization of at least 15 bytes internal buffer
+        std::to_chars(retval.data(), retval.data() + retval.size(), num);
+        return retval;
+#else
+        return std::to_string(num); // could use system locale, affected threaded performance...
+#endif
+    }
 }
 
 namespace {
@@ -348,7 +394,7 @@ namespace {
                 } else {
                     const auto& this_species_homeworlds = homeworlds.at(entry.first);
                     std::string homeworld_info;
-                    species_entry.append("(").append(std::to_string(this_species_homeworlds.size())).append("):  ");
+                    species_entry.append("(").append(ToChars(this_species_homeworlds.size())).append("):  ");
                     bool first = true;
                     for (int homeworld_id : this_species_homeworlds) {
                         if (first) first = false;
@@ -376,7 +422,7 @@ namespace {
                 }
                 if (!species_occupied_planets.empty()) {
                     if (species_occupied_planets.size() >= 5) {
-                        species_entry.append("  |   ").append(std::to_string(species_occupied_planets.size()))
+                        species_entry.append("  |   ").append(ToChars(species_occupied_planets.size()))
                                      .append(" ").append(UserString("OCCUPIED_PLANETS"));
                     } else {
                         species_entry.append("  |   ").append(UserString("OCCUPIED_PLANETS")).append(":  ");
@@ -436,7 +482,7 @@ namespace {
                 sorted_entries_list.emplace_back(std::piecewise_construct,
                                                  std::forward_as_tuple(empire->Name()),
                                                  std::forward_as_tuple(LinkTaggedIDText(VarText::EMPIRE_ID_TAG, id, empire->Name()).append("\n"),
-                                                                       std::to_string(id)));
+                                                                       ToChars(id)));
             }
 
         }
@@ -448,7 +494,7 @@ namespace {
                 sorted_entries_list.emplace_back(std::piecewise_construct,
                                                  std::forward_as_tuple(design->Name()),
                                                  std::forward_as_tuple(LinkTaggedIDText(VarText::DESIGN_ID_TAG, design_id, design->Name()).append("\n"),
-                                                                       std::to_string(design_id)));
+                                                                       ToChars(design_id)));
             }
 
         }
@@ -458,7 +504,7 @@ namespace {
                 sorted_entries_list.emplace_back(std::piecewise_construct,
                                                  std::forward_as_tuple(ship_name),
                                                  std::forward_as_tuple(LinkTaggedIDText(VarText::SHIP_ID_TAG, ship->ID(), ship_name).append("  "),
-                                                                       std::to_string(ship->ID())));
+                                                                       ToChars(ship->ID())));
             }
 
         }
@@ -470,7 +516,7 @@ namespace {
                 sorted_entries_list.emplace_back(std::piecewise_construct,
                                                  std::forward_as_tuple(ship_name),
                                                  std::forward_as_tuple(LinkTaggedIDText(VarText::SHIP_ID_TAG, ship->ID(), ship_name).append("  "),
-                                                                       std::to_string(ship->ID())));
+                                                                       ToChars(ship->ID())));
             }
 
         }
@@ -481,7 +527,7 @@ namespace {
                     sorted_entries_list.emplace_back(std::piecewise_construct,
                                                      std::forward_as_tuple(design->Name()),
                                                      std::forward_as_tuple(LinkTaggedIDText(VarText::DESIGN_ID_TAG, design_id, design->Name()).append("\n"),
-                                                                           std::to_string(design_id)));
+                                                                           ToChars(design_id)));
             }
 
         }
@@ -491,7 +537,7 @@ namespace {
                 sorted_entries_list.emplace_back(std::piecewise_construct,
                                                  std::forward_as_tuple(flt_name),
                                                  std::forward_as_tuple(LinkTaggedIDText(VarText::FLEET_ID_TAG, fleet->ID(), flt_name).append("  "),
-                                                                       std::to_string(fleet->ID())));
+                                                                       ToChars(fleet->ID())));
             }
 
         }
@@ -501,7 +547,7 @@ namespace {
                 sorted_entries_list.emplace_back(std::piecewise_construct,
                                                  std::forward_as_tuple(plt_name),
                                                  std::forward_as_tuple(LinkTaggedIDText(VarText::PLANET_ID_TAG, planet->ID(), plt_name).append("  "),
-                                                                       std::to_string(planet->ID())));
+                                                                       ToChars(planet->ID())));
             }
 
         }
@@ -511,7 +557,7 @@ namespace {
                 sorted_entries_list.emplace_back(std::piecewise_construct,
                                                  std::forward_as_tuple(bld_name),
                                                  std::forward_as_tuple(LinkTaggedIDText(VarText::BUILDING_ID_TAG, building->ID(), bld_name).append("  "),
-                                                                       std::to_string(building->ID())));
+                                                                       ToChars(building->ID())));
             }
 
         }
@@ -521,7 +567,7 @@ namespace {
                 sorted_entries_list.emplace_back(std::piecewise_construct,
                                                  std::forward_as_tuple(sys_name),
                                                  std::forward_as_tuple(LinkTaggedIDText(VarText::SYSTEM_ID_TAG, system->ID(), sys_name).append("  "),
-                                                                       std::to_string(system->ID())));
+                                                                       ToChars(system->ID())));
             }
 
         }
@@ -531,7 +577,7 @@ namespace {
                 sorted_entries_list.emplace_back(std::piecewise_construct,
                                                  std::forward_as_tuple(field_name),
                                                  std::forward_as_tuple(LinkTaggedIDText(VarText::FIELD_ID_TAG, field->ID(), field_name).append("  "),
-                                                                       std::to_string(field->ID())));
+                                                                       ToChars(field->ID())));
             }
 
         }
@@ -1827,7 +1873,7 @@ namespace {
         std::vector<std::shared_ptr<const UniverseObject>> objects_with_special;
         objects_with_special.reserve(objects.size());
         for (const auto& obj : objects.all())
-            if (obj->Specials().count(item_name))
+            if (obj->HasSpecial(item_name))
                 objects_with_special.push_back(obj);
 
         if (!objects_with_special.empty()) {
@@ -1887,12 +1933,9 @@ namespace {
                                             std::string& specific_type, std::string& detailed_description,
                                             GG::Clr& color, bool only_description = false)
     {
-        int empire_id = ALL_EMPIRES;
-        try {
-            empire_id = boost::lexical_cast<int>(item_name);
-        } catch(...)
-        {}
-        Empire* empire = GetEmpire(empire_id);
+        int empire_id = ToInt(item_name, ALL_EMPIRES);
+        const ScriptingContext context;
+        auto empire = context.GetEmpire(empire_id);
         if (!empire) {
             ErrorLogger() << "EncyclopediaDetailPanel::Refresh couldn't find empire with id " << item_name;
             return;
@@ -1914,17 +1957,17 @@ namespace {
             detailed_description += UserString("NO_CAPITAL");
 
         // to facilitate AI debugging
-        detailed_description += "\n" + UserString("EMPIRE_ID") + ": " + item_name;
+        detailed_description.append("\n").append(UserString("EMPIRE_ID")).append(": ").append(item_name);
 
         // Empire meters
-        if (empire->meter_begin() != empire->meter_end()) {
+        if (empire->meter_begin() != empire->meter_end()) { // if there are any...
             detailed_description += "\n\n";
             for (auto meter_it = empire->meter_begin();
                  meter_it != empire->meter_end(); ++meter_it)
             {
-                detailed_description += UserString(meter_it->first) + ": "
-                                     + DoubleToString(meter_it->second.Initial(), 3, false)
-                                     + "\n";
+                detailed_description.append(UserString(meter_it->first)).append(": ")
+                                    .append(DoubleToString(meter_it->second.Initial(), 3, false))
+                                    .append("\n");
             }
         }
 
@@ -2375,10 +2418,11 @@ namespace {
         }
 
         // occupied planets
-        std::vector<std::shared_ptr<const Planet>> species_occupied_planets;
+
+        std::vector<std::shared_ptr<const Planet>> species_occupied_planets; // TODO: store ID and public name instead of pointers
         const auto& species_object_populations = sm.SpeciesObjectPopulations();
         species_occupied_planets.reserve(species_object_populations.size());
-        auto sp_op_it = species_object_populations.find(item_name);
+        auto sp_op_it = species_object_populations.find(std::string{item_name}); // TODO: heterogenous comparison to avoid string construction
         if (sp_op_it != species_object_populations.end()) {
             const auto& object_pops = sp_op_it->second;
             for (const auto& object_pop : object_pops) {
@@ -2400,8 +2444,8 @@ namespace {
             for (auto& planet : species_occupied_planets) {
                 if (first) first = false;
                 else detailed_description.append(",  ");
-                detailed_description
-                .append(LinkTaggedIDText(VarText::PLANET_ID_TAG, planet->ID(), planet->PublicName(client_empire_id, universe)));
+                detailed_description.append(LinkTaggedIDText(
+                    VarText::PLANET_ID_TAG, planet->ID(), planet->PublicName(client_empire_id, universe)));
             }
             detailed_description.append("\n");
         }
@@ -2538,11 +2582,10 @@ namespace {
                                             std::string& specific_type, std::string& detailed_description,
                                             GG::Clr& color, bool only_description = false)
     {
-        MeterType meter_type = MeterType::INVALID_METER_TYPE;
+        // TODO: don't need to go back and forth to MeterType and string_view.
+        //       can concatenate and look up input item_name
 
-
-        std::istringstream item_ss(item_name);
-        item_ss >> meter_type;
+        MeterType meter_type = MeterTypeFromString(item_name, MeterType::INVALID_METER_TYPE);
         auto [meter_value_label, meter_name] = MeterValueLabelAndString(meter_type);
         std::string meter_name_value_desc{std::string{meter_name}.append("_VALUE_DESC")};
 
@@ -2633,20 +2676,13 @@ namespace {
             % (typical_strength / cost)).str();
     }
 
-    void RefreshDetailPanelShipDesignTag(   const std::string& item_type, const std::string& item_name,
+    void RefreshDetailPanelShipDesignTag(   int design_id,
                                             std::string& name, std::shared_ptr<GG::Texture>& texture,
                                             std::shared_ptr<GG::Texture>& other_texture, int& turns,
                                             float& cost, std::string& cost_units, std::string& general_type,
                                             std::string& specific_type, std::string& detailed_description,
                                             GG::Clr& color, bool only_description = false)
     {
-        int design_id = INVALID_DESIGN_ID;
-        try {
-            design_id = boost::lexical_cast<int>(item_name);
-        } catch (...) {
-            ErrorLogger() << "RefreshDetailPanelShipDesignTag couldn't convert name to design ID: " << item_name;
-            return;
-        }
         int client_empire_id = GGHumanClientApp::GetApp()->EmpireID();
         ScriptingContext context;
         Universe& universe = context.ContextUniverse();
@@ -2655,7 +2691,7 @@ namespace {
 
         const ShipDesign* design = universe.GetShipDesign(design_id);
         if (!design) {
-            ErrorLogger() << "RefreshDetailPanelShipDesignTag couldn't find ShipDesign with id " << item_name;
+            ErrorLogger() << "RefreshDetailPanelShipDesignTag couldn't find ShipDesign with id " << design_id;
             return;
         }
 
@@ -2786,8 +2822,7 @@ namespace {
         }
     }
 
-    void RefreshDetailPanelIncomplDesignTag(const std::string& item_type, const std::string& item_name,
-                                            std::string& name, std::shared_ptr<GG::Texture>& texture,
+    void RefreshDetailPanelIncomplDesignTag(std::string& name, std::shared_ptr<GG::Texture>& texture,
                                             std::shared_ptr<GG::Texture>& other_texture, int& turns,
                                             float& cost, std::string& cost_units, std::string& general_type,
                                             std::string& specific_type, std::string& detailed_description,
@@ -3219,7 +3254,7 @@ namespace {
         return filenames_by_type.at(PlanetType::INVALID_PLANET_TYPE);
     }
 
-    void RefreshDetailPanelSuitabilityTag(const std::string& item_type, const std::string& item_name,
+    void RefreshDetailPanelSuitabilityTag(int planet_id,
                                           std::string& name, std::shared_ptr<GG::Texture>& texture,
                                           std::shared_ptr<GG::Texture>& other_texture, int& turns,
                                           float& cost, std::string& cost_units, std::string& general_type,
@@ -3233,7 +3268,6 @@ namespace {
         Universe& universe = GetUniverse();
         ObjectMap& objects = universe.Objects();
 
-        int planet_id = boost::lexical_cast<int>(item_name);
         auto planet = objects.get<Planet>(planet_id); // non-const so it can be test modified to check results for various species
         if (!planet) {
             ErrorLogger() << "RefreshDetailPlanetSuitability couldn't find planet with id " << planet_id;
@@ -3382,7 +3416,7 @@ namespace {
                                         color, only_description);
         }
         else if (item_type == "ENC_SPECIES") {
-            RefreshDetailPanelSpeciesTag(       item_name,
+            RefreshDetailPanelSpeciesTag(item_name,
                                          name, texture, other_texture, turns, cost, cost_units,
                                          general_type, specific_type, detailed_description,
                                          color, only_description);
@@ -3407,8 +3441,7 @@ namespace {
                                             color, only_description);
         }
         else if (item_type == INCOMPLETE_DESIGN) {
-            RefreshDetailPanelIncomplDesignTag(item_name,
-                                               name, texture, other_texture, turns, cost, cost_units,
+            RefreshDetailPanelIncomplDesignTag(name, texture, other_texture, turns, cost, cost_units,
                                                general_type, specific_type, detailed_description, color,
                                                incomplete_design, only_description);
         }
@@ -3436,28 +3469,26 @@ namespace {
         }
     }
 
-    std::set<std::string> ExtractWords(const std::string& search_text) { // TODO: return vector<string_view> ?
-        std::set<std::string> words_in_search_text;
-        for (const auto& word_range : GG::GUI::GetGUI()->FindWordsStringIndices(search_text)) {
-            if (word_range.first == word_range.second)
-                continue;
-            std::string word(search_text.begin() + Value(word_range.first), search_text.begin() + Value(word_range.second));
-            if (word.empty())
-                continue;
-            words_in_search_text.insert(std::move(word));
+    std::vector<std::string_view> ExtractWords(const std::string& search_text) {
+        std::vector<std::string_view> words_in_search_text;
+        auto res = GG::GUI::GetGUI()->FindWordsStringIndices(search_text);
+        words_in_search_text.reserve(res.size());
+        for (const auto& word_range : res) {
+            if (auto len = Value(word_range.second - word_range.first))
+                words_in_search_text.emplace_back(search_text.data() + Value(word_range.first), len);
         }
         return words_in_search_text;
     }
 
     void SearchPediaArticleForWords(std::string_view article_key,
                                     std::string_view article_directory,
-                                    const DirEntry& dir_entry,
-                                    std::pair<std::string, std::string>& exact_match,
-                                    std::pair<std::string, std::string>& word_match,
-                                    std::pair<std::string, std::string>& partial_match,
-                                    std::pair<std::string, std::string>& article_match,
+                                    DirEntry&& dir_entry,
+                                    std::pair<std::string_view, std::string>& exact_match,
+                                    std::pair<std::string_view, std::string>& word_match,
+                                    std::pair<std::string_view, std::string>& partial_match,
+                                    std::pair<std::string_view, std::string>& article_match,
                                     const std::string& search_text,
-                                    const std::set<std::string_view, std::less<>>& words_in_search_text,
+                                    const std::vector<std::string_view>& words_in_search_text,
                                     std::size_t idx,
                                     bool search_article_text)
     {
@@ -3465,29 +3496,33 @@ namespace {
         auto article_name = boost::locale::to_lower(dir_entry.item_name.data(), GetLocale("en_US.UTF-8"));
         // search for exact title matches
         if (article_name == search_text) {
-            exact_match.first = article_name_link_id.article_name;
-            exact_match.second = std::move(article_name_link_id.link_text);            return;
+            exact_match.first = dir_entry.item_name;
+            exact_match.second = std::move(dir_entry.link_text);
+            return;
         }
 
-        // search for full word matches in title
+        // search for full word matches in title (assuming input already lower-case)
         auto title_words{ExtractWords(article_name)};
         for (const auto& title_word : title_words) {
-            if (words_in_search_text.count(title_word)) {
-                word_match.first = article_name_link_id.article_name;
-                word_match.second = std::move(article_name_link_id.link_text);
+            if (std::any_of(words_in_search_text.begin(), words_in_search_text.end(),
+                            [&title_word](const auto& w) { return title_word == w; }))
+            {
+                word_match.first = dir_entry.item_name;
+                word_match.second = std::move(dir_entry.link_text);
                 return;
             }
         }
 
-        // search for partial word matches: searched-for words that appear
-        // in the title text, not necessarily as a complete word
+        // search for partial word matches: search-for words in search text that appear
+        // as substrings in the title text (not necessarily as a complete word)
+
         for (const auto& word : words_in_search_text) {
             // reject searches in text for words less than 3 characters
             if (word.size() < 3)
                 continue;
             if (boost::contains(article_name, word)) {
-                partial_match.first = article_name_link_id.article_name;
-                partial_match.second = std::move(article_name_link_id.link_text);
+                partial_match.first = dir_entry.item_name;
+                partial_match.second = std::move(dir_entry.link_text);
                 return;
             }
         }
@@ -3503,8 +3538,8 @@ namespace {
             const auto& article_text{UserString(article_entry.description)};
             std::string article_text_lower = boost::locale::to_lower(article_text, GetLocale("en_US.UTF-8"));
             if (boost::contains(article_text_lower, search_text)) {
-                article_match.first = article_name_link_id.article_name;
-                article_match.second = std::move(article_name_link_id.link_text);
+                article_match.first = dir_entry.item_name;
+                article_match.second = std::move(dir_entry.link_text);
             }
             return;
         }
@@ -3523,19 +3558,19 @@ namespace {
         std::weak_ptr<const ShipDesign> dummyD;
 
         //std::cout << "cat: " << article_category << "  key: " << article_key << "\n";
-        GetRefreshDetailPanelInfo(article_directory, article_key, article_name_link_id.id,
+        GetRefreshDetailPanelInfo(article_directory, article_key, dir_entry.id,
                                   dummy3, dummy1, dummy2, dummyA, dummyB, dummy4,
                                   dummy5, dummy6, detailed_description, dummyC,
                                   dummyD, true);
         if (boost::contains(detailed_description, search_text)) {
-            article_match.first = article_name_link_id.article_name;
-            article_match.second = std::move(article_name_link_id.link_text);
+            article_match.first = dir_entry.item_name;
+            article_match.second = std::move(dir_entry.link_text);
             return;
         }
         std::string desc_lower = boost::locale::to_lower(detailed_description, GetLocale("en_US.UTF-8"));
         if (boost::contains(desc_lower, search_text)) {
-            article_match.first = article_name_link_id.article_name;
-            article_match.second = std::move(article_name_link_id.link_text);
+            article_match.first = dir_entry.item_name;
+            article_match.second = std::move(dir_entry.link_text);
             return;
         }
     }
@@ -3554,7 +3589,7 @@ void EncyclopediaDetailPanel::HandleSearchTextEntered() {
         return;
 
     // find distinct words in search text
-    std::set<std::string> words_in_search_text = ExtractWords(search_text);
+    auto words_in_search_text = ExtractWords(search_text);
     if (words_in_search_text.empty())
         return;
 
@@ -3563,10 +3598,10 @@ void EncyclopediaDetailPanel::HandleSearchTextEntered() {
     timer.EnterSection("get subdirs");
     auto pedia_entries = GetSubDirs("ENC_INDEX", false, 0);
 
-    std::vector<std::pair<std::string, std::string>> exact_match_report;
-    std::vector<std::pair<std::string, std::string>> word_match_report;
-    std::vector<std::pair<std::string, std::string>> partial_match_report;
-    std::vector<std::pair<std::string, std::string>> article_match_report;
+    std::vector<std::pair<std::string_view, std::string>> exact_match_report;
+    std::vector<std::pair<std::string_view, std::string>> word_match_report;
+    std::vector<std::pair<std::string_view, std::string>> partial_match_report;
+    std::vector<std::pair<std::string_view, std::string>> article_match_report;
 
     exact_match_report.resize(pedia_entries.size());   // each entry will be sorted into just one of these, but empties will be later ignored
     word_match_report.resize(pedia_entries.size());
@@ -3704,7 +3739,8 @@ void EncyclopediaDetailPanel::RefreshImpl() {
     if (m_items.empty())
         return;
 
-    GetRefreshDetailPanelInfo(m_items_it->first, m_items_it->second,
+    int item_as_id = ToInt(m_items_it->second);
+    GetRefreshDetailPanelInfo(m_items_it->first, m_items_it->second, item_as_id,
                               name, texture, other_texture, turns, cost, cost_units,
                               general_type, specific_type, detailed_description, color,
                               m_incomplete_design);
@@ -3843,17 +3879,11 @@ void EncyclopediaDetailPanel::SetText(const std::string& text, bool lookup_in_st
 }
 
 void EncyclopediaDetailPanel::SetPlanet(int planet_id) {
-    int current_item_id = INVALID_OBJECT_ID;
-    if (m_items_it != m_items.end()) {
-        try {
-            current_item_id = boost::lexical_cast<int>(m_items_it->second);
-        } catch (...) {
-        }
-    }
+    int current_item_id = ToInt(m_items_it->second, INVALID_OBJECT_ID);
     if (planet_id == current_item_id)
         return;
 
-    AddItem(PLANET_SUITABILITY_REPORT, std::to_string(planet_id));
+    AddItem(PLANET_SUITABILITY_REPORT, ToChars(planet_id));
 }
 
 void EncyclopediaDetailPanel::SetTech(const std::string& tech_name) {
@@ -3910,16 +3940,10 @@ void EncyclopediaDetailPanel::SetMeterType(std::string meter_string) {
 }
 
 void EncyclopediaDetailPanel::SetObject(int object_id) {
-    int current_item_id = INVALID_OBJECT_ID;
-    if (m_items_it != m_items.end()) {
-        try {
-            current_item_id = boost::lexical_cast<int>(m_items_it->second);
-        } catch (...) {
-        }
-    }
+    int current_item_id = ToInt(m_items_it->second, INVALID_OBJECT_ID);
     if (object_id == current_item_id)
         return;
-    AddItem(UNIVERSE_OBJECT, std::to_string(object_id));
+    AddItem(UNIVERSE_OBJECT, ToChars(object_id));
 }
 
 void EncyclopediaDetailPanel::SetObject(const std::string& object_id) {
@@ -3929,16 +3953,10 @@ void EncyclopediaDetailPanel::SetObject(const std::string& object_id) {
 }
 
 void EncyclopediaDetailPanel::SetEmpire(int empire_id) {
-    int current_item_id = ALL_EMPIRES;
-    if (m_items_it != m_items.end()) {
-        try {
-            current_item_id = boost::lexical_cast<int>(m_items_it->second);
-        } catch (...) {
-        }
-    }
+    int current_item_id = ToInt(m_items_it->second, ALL_EMPIRES);
     if (empire_id == current_item_id)
         return;
-    AddItem("ENC_EMPIRE", std::to_string(empire_id));
+    AddItem("ENC_EMPIRE", ToChars(empire_id));
 }
 
 void EncyclopediaDetailPanel::SetEmpire(const std::string& empire_id) {
@@ -3948,16 +3966,11 @@ void EncyclopediaDetailPanel::SetEmpire(const std::string& empire_id) {
 }
 
 void EncyclopediaDetailPanel::SetDesign(int design_id) {
-    int current_item_id = INVALID_DESIGN_ID;
-    if (m_items_it != m_items.end() && m_items_it->first == "ENC_SHIP_DESIGN") {
-        try {
-            current_item_id = boost::lexical_cast<int>(m_items_it->second);
-        } catch (...) {
-        }
-    }
+    int current_item_id = (m_items_it->first == "ENC_SHIP_DESIGN") ?
+        ToInt(m_items_it->second, INVALID_DESIGN_ID) : INVALID_DESIGN_ID;
     if (design_id == current_item_id)
         return;
-    AddItem("ENC_SHIP_DESIGN", std::to_string(design_id));
+    AddItem("ENC_SHIP_DESIGN", ToChars(design_id));
 }
 
 void EncyclopediaDetailPanel::SetDesign(const std::string& design_id) {
